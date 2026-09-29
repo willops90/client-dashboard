@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+.env
+.vercel
+exports/
+
+# Real client plans stay off GitHub. Only the made-up Northside example is committed.
+plans/*.json
+!plans/northside-cycle-1.json

@@ -1,0 +1,110 @@
+{
+  "client": {
+    "name": "Northside Climate Co.",
+    "slug": "northside",
+    "industry": "HVAC",
+    "timezone": "Australia/Brisbane"
+  },
+  "members": [
+    { "email": "dave@example.com", "name": "Dave", "role": "Owner" },
+    { "email": "priya@example.com", "name": "Priya", "role": "Ops lead" },
+    { "email": "sean@example.com", "name": "Sean", "role": "Scheduler" }
+  ],
+  "cycle": {
+    "number": 1,
+    "start_date": "2026-08-17",
+    "goal_title": "Cut Dave's hours in the business from 58 to 35 a week",
+    "goal_why": "A buyer pays less for a business that stops when the owner stops. Taking quoting and scheduling off Dave is the fastest way to show it doesn't."
+  },
+  "kpis": [
+    {
+      "name": "Owner hours a week",
+      "unit": "hrs",
+      "start": 58,
+      "target": 35,
+      "lower_is_better": true,
+      "primary": true,
+      "how_measured": "Measured from the timesheet Dave fills in each Friday. This is the number the whole cycle is judged on.",
+      "goals": { "30": 52, "60": 42, "90": 35 }
+    },
+    {
+      "name": "Quotes sent without Dave",
+      "unit": "%",
+      "start": 5,
+      "target": 80,
+      "lower_is_better": false,
+      "how_measured": "A leading indicator, counted from the quotes inbox. When quoting moves off Dave, his hours follow a few weeks later.",
+      "goals": { "60": 60, "90": 80 }
+    },
+    {
+      "name": "Jobs scheduled by Sean",
+      "unit": "%",
+      "start": 0,
+      "target": 90,
+      "lower_is_better": false,
+      "how_measured": "A leading indicator. Counted from ServiceM8: jobs booked or moved by Sean, divided by all jobs that week.",
+      "goals": { "60": 70, "90": 90 }
+    }
+  ],
+  "plan_pairs": [
+    {
+      "problem": "Every quote over $5k waits for Dave, so jobs stall when he's on the tools or away.",
+      "initiative": "Build a quoting playbook and pricing matrix so Priya can quote up to $15k on her own."
+    },
+    {
+      "problem": "The schedule lives in Dave's head and phone. Nobody else can move a job.",
+      "initiative": "Move every job into ServiceM8 and make Sean the owner of the schedule."
+    },
+    {
+      "problem": "There are no written decision rights, so the team's default answer is \"ask Dave\".",
+      "initiative": "Agree who decides what, and start a 30-minute weekly leadership meeting Dave doesn't run."
+    }
+  ],
+  "months": [
+    { "number": 1, "summary": "Log two weeks of Dave's time and map every task he does to the person who should own it.", "goal": "52 hours a week." },
+    { "number": 2, "summary": "Hand quoting to Priya and scheduling to Sean, with Dave reviewing rather than doing.", "goal": "42 hours and 60% of quotes without Dave." },
+    { "number": 3, "summary": "Decision rights live, leadership meeting running, then a two-week test with Dave away.", "goal": "35 hours and a clean two weeks away." }
+  ],
+  "weeks": [
+    { "number": 1, "meeting": "90-minute LEAP planning meeting", "asset": "Owner time audit begins" },
+    { "number": 2, "meeting": null, "asset": "Owner time audit, second week of logs" },
+    { "number": 3, "meeting": "Owner Exit Map workshop", "asset": "Owner Exit Map v1" },
+    { "number": 4, "meeting": null, "asset": "Quoting process mapped" },
+    { "number": 5, "meeting": "Quoting handover plan", "asset": "Pricing matrix v1" },
+    { "number": 6, "meeting": null, "asset": "Quoting SOP draft" },
+    { "number": 7, "meeting": "Quoting review and decision rights", "asset": "Decision Rights Matrix v1" },
+    { "number": 8, "meeting": null, "asset": "Scheduling SOP" },
+    { "number": 9, "meeting": "Scheduling handover and month 2 check", "asset": "ServiceM8 schedule board" },
+    { "number": 10, "meeting": null, "asset": "Leadership meeting agenda and scorecard" },
+    { "number": 11, "meeting": "Progress review: test each asset against the numbers", "asset": "Fix the weakest asset" },
+    { "number": 12, "meeting": null, "asset": "Two weeks with Dave away" },
+    { "number": 13, "meeting": "Debrief and plan the next 90 days", "asset": "Sale-readiness scorecard re-score" }
+  ],
+  "assets": [
+    { "name": "Owner Exit Map v1", "description": "Every task Dave does, how many hours it takes, and who takes it over. Built from two weeks of time logs.", "due_week": 3 },
+    { "name": "Quoting playbook and pricing matrix", "description": "Step-by-step quoting process plus price bands by job type, so quotes up to $15k don't need Dave.", "due_week": 6 },
+    { "name": "Decision Rights Matrix", "description": "Who decides, who approves and who just needs to know, for the 30 decisions that come up most.", "due_week": 7 },
+    { "name": "Scheduling SOP", "description": "How Sean builds, changes and confirms the weekly schedule in ServiceM8.", "due_week": 8 },
+    { "name": "Leadership meeting rhythm", "description": "A 30-minute weekly agenda and scorecard review Priya runs, so decisions happen without Dave in the room.", "due_week": 10 }
+  ],
+  "scorecard": [
+    { "drag": "owner_dependency", "score": 3, "target": 5, "in_focus": true, "note": "This cycle's focus" },
+    { "drag": "management_layer", "score": 3, "target": 4, "in_focus": true, "note": "Improves as a side effect" },
+    { "drag": "reliable_numbers", "score": 4, "note": "Parked" },
+    { "drag": "customer_concentration", "score": 5, "note": "Parked" },
+    { "drag": "revenue_quality", "score": 7, "note": "Healthy: 60% maintenance contracts" }
+  ],
+  "actions": [
+    { "owner": "Dave", "title": "Sign off pricing matrix v1", "due": "2026-09-25" },
+    { "owner": "Priya", "title": "Quote five jobs over $5k without Dave and log the time each takes", "due": "2026-10-02" },
+    { "owner": "Sean", "title": "Move every October job into the ServiceM8 schedule", "due": "2026-09-30" },
+    { "owner": "Dave", "title": "Forward all quote requests to the quotes inbox instead of answering them", "due": "2026-09-24" },
+    { "owner": "Will", "title": "Record Loom feedback on Priya's quoting SOP draft", "due": "2026-09-29" },
+    { "owner": "Will", "title": "Draft the decision-rights matrix for Thursday", "due": "2026-10-01" }
+  ],
+  "parked": [
+    { "text": "The council maintenance contract is 24% of revenue.", "category": "Customer concentration" },
+    { "text": "Management accounts come quarterly from the bookkeeper, not monthly from Xero.", "category": "Numbers a buyer can rely on" },
+    { "text": "Second apprentice intake and a fourth van.", "category": "Growth, after the business can run without Dave" }
+  ]
+}

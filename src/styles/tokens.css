@@ -1,0 +1,26 @@
+/* The palette, in one place. Swap these for the Owner Optional brand colours
+   later; nothing else in the app hard-codes a colour. */
+
+:root {
+  --paper: #EEF2F1; --sheet: #F8FAF9; --ink: #1B2831; --muted: #5A6870; --rule: #CFD8D8;
+  --teal: #0E6B66; --teal-soft: #D3E6E3; --slate-soft: #E1E6EA; --on-teal: #FFFFFF;
+  --good: #2C8A4B; --warn: #B87A0B; --bad: #BE3B28;
+  --good-bg: #E0F0E5; --warn-bg: #F7EBD2; --bad-bg: #F6DEDA;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #10181D; --sheet: #172229; --ink: #E4EBEC; --muted: #98A7AD; --rule: #2B3A42;
+    --teal: #4FB8AF; --teal-soft: #16332F; --slate-soft: #1E2A31; --on-teal: #0B1A18;
+    --good: #5BC27D; --warn: #E0A83A; --bad: #EE7560;
+    --good-bg: #15301F; --warn-bg: #33280F; --bad-bg: #3A1C17;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #10181D; --sheet: #172229; --ink: #E4EBEC; --muted: #98A7AD; --rule: #2B3A42;
+  --teal: #4FB8AF; --teal-soft: #16332F; --slate-soft: #1E2A31; --on-teal: #0B1A18;
+  --good: #5BC27D; --warn: #E0A83A; --bad: #EE7560;
+  --good-bg: #15301F; --warn-bg: #33280F; --bad-bg: #3A1C17;
+}
