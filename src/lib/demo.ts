@@ -110,7 +110,12 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
       goals: Object.entries(k.goals ?? {}).map(([day, value]) => ({ day: Number(day), value })),
       readings: (demoReadings[k.name] ?? []).map((value, w) => ({ week_number: w + 1, value, entered_by_advisor: false })),
     })),
-    planPairs: plan.plan_pairs.map((p, i) => ({ id: `p${i}`, ...p })),
+    planPairs: plan.plan_pairs.map((p, i) => ({
+      id: `p${i}`,
+      ...p,
+      problem_short: p.problem_short ?? null,
+      initiative_short: p.initiative_short ?? null,
+    })),
     months: plan.months.map((m) => ({
       id: `mo${m.number}`,
       number: m.number,

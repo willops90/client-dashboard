@@ -177,8 +177,9 @@ export function AssetsSection({ data }: { data: DashboardData }) {
   );
 }
 
-export function WeeksSection({ data }: { data: DashboardData }) {
-  const { weeks, months, cycle, currentWeek, day, viewer, client } = data;
+/** Weeks grouped by month for the weekly breakdown (and the v2 week strip). */
+export function buildBreakdown(data: DashboardData): BreakdownMonth[] {
+  const { weeks, months, cycle, currentWeek, day } = data;
   const inCycle = day >= 1 && day <= 90;
   // Day 60 falls in week 9, so the review phase marker sits before week 10.
   const firstReviewWeek = Math.ceil(BUILD_PHASE_END_DAY / 7) + 1;
@@ -187,7 +188,7 @@ export function WeeksSection({ data }: { data: DashboardData }) {
     if (set) return set.number;
     return Math.min(3, Math.floor(((n - 1) * 7) / 30) + 1);
   };
-  const groups: BreakdownMonth[] = [1, 2, 3]
+  return [1, 2, 3]
     .map((n) => {
       const m = months.find((x) => x.number === n);
       const inMonth = weeks.filter((w) => monthOfWeek(w.number) === n);
@@ -222,7 +223,11 @@ export function WeeksSection({ data }: { data: DashboardData }) {
       };
     })
     .filter((g) => g.weeks.length > 0);
+}
 
+export function WeeksSection({ data }: { data: DashboardData }) {
+  const { viewer, client } = data;
+  const groups = buildBreakdown(data);
   return (
     <section className="block" aria-labelledby="h-weeks">
       <h2 id="h-weeks">

@@ -104,7 +104,7 @@ function axisLabel(v: number, unit: Kpi["unit"]): string {
   return v.toLocaleString("en-AU");
 }
 
-function Chart({ kpi, day }: { kpi: Kpi; day: number }) {
+export function Chart({ kpi, day }: { kpi: Kpi; day: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(960);
 

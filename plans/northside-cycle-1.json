@@ -110,15 +110,21 @@
   "plan_pairs": [
     {
       "problem": "Every quote over $5k waits for Dave, so jobs stall when he's on the tools or away.",
-      "initiative": "Write the quoting SOP and pricing matrix into the SOP Kit so Priya can quote up to $15k on her own."
+      "initiative": "Write the quoting SOP and pricing matrix into the SOP Kit so Priya can quote up to $15k on her own.",
+      "problem_short": "Quoting waits for Dave",
+      "initiative_short": "Priya quotes up to $15k"
     },
     {
       "problem": "The schedule lives in Dave's head and phone. Nobody else can move a job.",
-      "initiative": "Move every job into ServiceM8 and make Sean the owner of the schedule, with the scheduling SOP in the SOP Kit."
+      "initiative": "Move every job into ServiceM8 and make Sean the owner of the schedule, with the scheduling SOP in the SOP Kit.",
+      "problem_short": "Only Dave can move a job",
+      "initiative_short": "Sean owns the schedule"
     },
     {
       "problem": "There are no written decision rights, so the team's default answer is \"ask Dave\".",
-      "initiative": "Agree who decides what, and start a 30-minute weekly leadership meeting Dave doesn't run."
+      "initiative": "Agree who decides what, and start a 30-minute weekly leadership meeting Dave doesn't run.",
+      "problem_short": "Every answer is \"ask Dave\"",
+      "initiative_short": "Decision rights and a weekly leadership meeting"
     }
   ],
   "months": [

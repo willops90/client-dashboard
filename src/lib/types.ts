@@ -45,7 +45,13 @@ export type Kpi = {
   readings: KpiReading[];
 };
 
-export type PlanPair = { id: string; problem: string; initiative: string };
+export type PlanPair = {
+  id: string;
+  problem: string;
+  initiative: string;
+  problem_short: string | null;
+  initiative_short: string | null;
+};
 
 export type MonthStatus = "upcoming" | "in_progress" | "met" | "missed";
 export type Month = {

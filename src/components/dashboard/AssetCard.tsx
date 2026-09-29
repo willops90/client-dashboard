@@ -8,7 +8,7 @@ import { PreviewBlocks } from "./PreviewBlocks";
  * One asset with its preview. On a phone the preview expands inline; on
  * wider screens it opens in a modal dialog (Esc or Close to dismiss).
  */
-export function AssetPreviewControl({ asset }: { asset: Asset }) {
+export function AssetPreviewControl({ asset, showDescription = false }: { asset: Asset; showDescription?: boolean }) {
   const [inline, setInline] = useState(false);
   const [modal, setModal] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -32,6 +32,7 @@ export function AssetPreviewControl({ asset }: { asset: Asset }) {
         {inline ? "Hide preview" : "Preview"}
       </button>
       <div id={inlineId} className="preview-inline" hidden={!inline}>
+        {inline && showDescription && asset.description && <p className="pv-text pv-desc">{asset.description}</p>}
         {inline && <PreviewBlocks blocks={asset.preview.blocks} />}
       </div>
       {modal && (
@@ -48,6 +49,7 @@ export function AssetPreviewControl({ asset }: { asset: Asset }) {
             <div>
               <h3 id={titleId}>{asset.name}</h3>
               {asset.built_on && <span className="built-on">Built on {asset.built_on}</span>}
+              {showDescription && asset.description && <p className="pv-text pv-desc">{asset.description}</p>}
             </div>
             <button type="button" className="btn secondary sm" onClick={() => dialog.current?.close()} autoFocus>
               Close

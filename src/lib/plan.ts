@@ -149,7 +149,16 @@ export const planSchema = z
         }),
       )
       .min(1, "add at least one KPI"),
-    plan_pairs: z.array(z.object({ problem: text, initiative: text })).min(1),
+    plan_pairs: z
+      .array(
+        z.object({
+          problem: text,
+          initiative: text,
+          problem_short: z.string().optional().describe("a few words, shown before the row is expanded"),
+          initiative_short: z.string().optional(),
+        }),
+      )
+      .min(1),
     months: z
       .array(
         z.object({

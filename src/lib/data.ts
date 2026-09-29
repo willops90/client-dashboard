@@ -53,7 +53,7 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
         .select("*, kpi_goals(day, value), kpi_readings(week_number, value, entered_by_advisor)")
         .eq("cycle_id", cycle.id)
         .order("sort"),
-      supabase.from("plan_pairs").select("id, problem, initiative").eq("cycle_id", cycle.id).order("sort"),
+      supabase.from("plan_pairs").select("id, problem, initiative, problem_short, initiative_short").eq("cycle_id", cycle.id).order("sort"),
       supabase.from("months").select("id, number, summary, goal_text, status, focus, first_week, last_week").eq("cycle_id", cycle.id).order("number"),
       supabase.from("weeks").select("id, number, meeting, asset, status").eq("cycle_id", cycle.id).order("number"),
       supabase

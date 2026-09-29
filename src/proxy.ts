@@ -4,12 +4,12 @@ import { NextResponse, type NextRequest } from "next/server";
 // Refreshes the Supabase session cookie on every request and sends signed-out
 // visitors to /login. Access control itself is enforced by RLS in the database.
 
-const PUBLIC_PATHS = ["/login", "/auth", "/demo"];
+const PUBLIC_PATHS = ["/login", "/auth", "/demo", "/demo-v2"];
 
 export async function proxy(request: NextRequest) {
   // The demo uses only made-up data built into the code, so it skips the
   // login check and works even before Supabase is configured.
-  if (request.nextUrl.pathname === "/demo") return NextResponse.next();
+  if (request.nextUrl.pathname === "/demo" || request.nextUrl.pathname === "/demo-v2") return NextResponse.next();
 
   let response = NextResponse.next({ request });
 
