@@ -120,8 +120,8 @@ TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/postgres npm run test:rls
 
 ## Deploying
 
-A separate Vercel project from the marketing site, with **Root Directory** set
-to `dashboard`. Environment variables: `NEXT_PUBLIC_SUPABASE_URL`,
+A separate Vercel project from the marketing site, importing this repo (the
+app is at the top level, so no Root Directory setting). Environment variables: `NEXT_PUBLIC_SUPABASE_URL`,
 `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`. **Never** add the
 service role key to Vercel; only the command-line scripts use it. Then add the
 subdomain (e.g. `app.owneroptionaladvisory.com`) under Domains.
