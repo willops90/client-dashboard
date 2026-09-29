@@ -159,6 +159,7 @@ async function loadCycle(db: Db, plan: Plan, clientId: string, log: string[]): P
           goal_title: c.goal_title,
           goal_short: c.goal_short ?? null,
           goal_note: c.goal_note ?? null,
+          milestones: c.milestones ?? null,
           goal_why: c.goal_why ?? null,
           ...(c.status ? { status: c.status } : {}),
         },
@@ -225,7 +226,15 @@ async function loadMonthsAndWeeks(db: Db, plan: Plan, cycleId: string, log: stri
   if (plan.months.length) {
     must(
       await db.from("months").upsert(
-        plan.months.map((m) => ({ cycle_id: cycleId, number: m.number, summary: m.summary, goal_text: m.goal ?? null })),
+        plan.months.map((m) => ({
+          cycle_id: cycleId,
+          number: m.number,
+          summary: m.summary,
+          goal_text: m.goal ?? null,
+          focus: m.focus ?? null,
+          first_week: m.weeks?.[0] ?? null,
+          last_week: m.weeks?.[1] ?? null,
+        })),
         { onConflict: "cycle_id,number" },
       ),
       "Saving months",

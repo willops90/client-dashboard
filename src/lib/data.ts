@@ -54,7 +54,7 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
         .eq("cycle_id", cycle.id)
         .order("sort"),
       supabase.from("plan_pairs").select("id, problem, initiative").eq("cycle_id", cycle.id).order("sort"),
-      supabase.from("months").select("id, number, summary, goal_text, status").eq("cycle_id", cycle.id).order("number"),
+      supabase.from("months").select("id, number, summary, goal_text, status, focus, first_week, last_week").eq("cycle_id", cycle.id).order("number"),
       supabase.from("weeks").select("id, number, meeting, asset, status").eq("cycle_id", cycle.id).order("number"),
       supabase
         .from("actions")

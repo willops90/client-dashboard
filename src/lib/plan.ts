@@ -80,6 +80,9 @@ export const assetPreviewSchema = z.object({ blocks: z.array(previewBlock).min(1
 export type AssetPreview = z.infer<typeof assetPreviewSchema>;
 export type PreviewBlock = z.infer<typeof previewBlock>;
 
+export const MILESTONE_STATUSES = ["not_started", "in_progress", "passed", "failed"] as const;
+export type MilestoneStatus = (typeof MILESTONE_STATUSES)[number];
+
 export const planSchema = z
   .object({
     client: z.object({
@@ -121,6 +124,16 @@ export const planSchema = z
       goal_note: z.string().optional().describe("one line of context under the chart"),
       goal_why: z.string().optional(),
       status: z.enum(["planned", "active", "review", "closed"]).optional(),
+      milestones: z
+        .array(
+          z.object({
+            name: text,
+            target: z.string().optional().describe('what passing looks like, e.g. "Passed"'),
+            status: z.enum(MILESTONE_STATUSES).optional(),
+          }),
+        )
+        .optional()
+        .describe("pass/fail checks shown in the KPIs band beside the numeric KPIs"),
     }),
     kpis: z
       .array(
@@ -143,6 +156,11 @@ export const planSchema = z
           number: z.number().int().min(1).max(3),
           summary: text,
           goal: z.string().optional(),
+          focus: z.string().optional().describe("the Focus line in the weekly breakdown"),
+          weeks: z
+            .tuple([z.number().int().min(1).max(13), z.number().int().min(1).max(13)])
+            .optional()
+            .describe("first and last week in this month, e.g. [1, 5]"),
         }),
       )
       .max(3),
@@ -213,6 +231,11 @@ export const planSchema = z
     if (plan.client.exit?.roadmap?.some((r) => r.cycle > plan.client.exit!.cycles)) {
       ctx.addIssue({ code: "custom", path: ["client", "exit", "roadmap"], message: "a roadmap cycle is beyond the number of cycles" });
     }
+    plan.months.forEach((m, i) => {
+      if (m.weeks && m.weeks[0] > m.weeks[1]) {
+        ctx.addIssue({ code: "custom", path: ["months", i, "weeks"], message: "the first week must come before the last" });
+      }
+    });
     const dupes = (xs: (string | number)[]) => xs.filter((x, i) => xs.indexOf(x) !== i);
     for (const [path, values] of [
       ["kpis", plan.kpis.map((k) => k.name)],

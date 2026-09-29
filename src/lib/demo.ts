@@ -77,6 +77,7 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
     goal_title: plan.cycle.goal_title,
     goal_short: plan.cycle.goal_short ?? null,
     goal_note: plan.cycle.goal_note ?? null,
+    milestones: plan.cycle.milestones ?? null,
     goal_why: plan.cycle.goal_why ?? null,
     status: "active",
   };
@@ -115,6 +116,9 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
       number: m.number,
       summary: m.summary,
       goal_text: m.goal ?? null,
+      focus: m.focus ?? null,
+      first_week: m.weeks?.[0] ?? null,
+      last_week: m.weeks?.[1] ?? null,
       status: demoMonthStatus[m.number as 1 | 2 | 3],
     })),
     weeks: plan.weeks.map((w) => ({

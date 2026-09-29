@@ -106,3 +106,27 @@ describe("Northside demo assets", () => {
     expect(JSON.stringify(northside)).not.toMatch(/valuation|worth \$|uplift/i);
   });
 });
+
+describe("Northside LEAP plan alignment", () => {
+  const plan = (parsePlan(northside) as { plan: Plan }).plan;
+
+  it("groups weeks 1–13 into months with no gaps or overlaps, each with a Focus line", () => {
+    const covered = plan.months.flatMap((m) => {
+      expect(m.focus, `month ${m.number}`).toBeTruthy();
+      const [a, b] = m.weeks!;
+      return Array.from({ length: b - a + 1 }, (_, i) => a + i);
+    });
+    expect(covered).toEqual(Array.from({ length: 13 }, (_, i) => i + 1));
+  });
+
+  it("has the away test as a pass/fail milestone, separate from the charted KPIs", () => {
+    expect(plan.cycle.milestones).toEqual([{ name: "Two weeks with Dave away", target: "Passed", status: "not_started" }]);
+    expect(plan.kpis.map((k) => k.name)).not.toContain("Two weeks with Dave away");
+  });
+
+  it("rejects a month whose week range runs backwards", () => {
+    const p = clone();
+    p.months[0].weeks = [5, 1];
+    expect(parsePlan(p).ok).toBe(false);
+  });
+});

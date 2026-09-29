@@ -58,7 +58,14 @@
     "goal_title": "Prove Northside runs without Dave: owner hours from 58 to 35 a week, then two clean weeks with Dave away.",
     "goal_short": "Prove Northside runs without Dave.",
     "goal_note": "Owner hours is one of the first things a buyer asks about in due diligence. The cycle ends with a two-week test with Dave away.",
-    "goal_why": "A buyer pays less for a business that stops when the owner stops. Taking quoting and scheduling off Dave is the fastest way to show it doesn't."
+    "goal_why": "A buyer pays less for a business that stops when the owner stops. Taking quoting and scheduling off Dave is the fastest way to show it doesn't.",
+    "milestones": [
+      {
+        "name": "Two weeks with Dave away",
+        "target": "Passed",
+        "status": "not_started"
+      }
+    ]
   },
   "kpis": [
     {
@@ -118,17 +125,32 @@
     {
       "number": 1,
       "summary": "Log two weeks of Dave's time and map every task he does to the person who should own it.",
-      "goal": "52 hours a week."
+      "goal": "52 hours a week.",
+      "focus": "Owner time audit and mapping the handover",
+      "weeks": [
+        1,
+        5
+      ]
     },
     {
       "number": 2,
       "summary": "Hand quoting to Priya and scheduling to Sean, with Dave reviewing rather than doing.",
-      "goal": "42 hours and 60% of quotes without Dave."
+      "goal": "42 hours and 60% of quotes without Dave.",
+      "focus": "Handing over quoting and scheduling",
+      "weeks": [
+        6,
+        9
+      ]
     },
     {
       "number": 3,
       "summary": "Decision rights live, leadership meeting running, then a two-week test with Dave away.",
-      "goal": "35 hours and a clean two weeks away."
+      "goal": "35 hours and a clean two weeks away.",
+      "focus": "Decision rights, leadership rhythm and the away test",
+      "weeks": [
+        10,
+        13
+      ]
     }
   ],
   "weeks": [

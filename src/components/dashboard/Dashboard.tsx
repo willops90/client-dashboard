@@ -6,6 +6,7 @@ import { Fortnight } from "./Fortnight";
 import { AssetsSection, PlanSection, ScorecardSection, WeeksSection } from "./PlanSections";
 import { ParkedSection } from "./Parked";
 import { ExitStrip } from "./ExitStrip";
+import { LeapTag } from "./LeapTag";
 
 /** The client dashboard. The same template renders every client, the advisor view and /demo. */
 export function Dashboard({ data, advisorPanel }: { data: DashboardData; advisorPanel?: React.ReactNode }) {
@@ -25,7 +26,10 @@ export function Dashboard({ data, advisorPanel }: { data: DashboardData; advisor
       <CheckinBanner data={data} />
       {advisorPanel}
       <section className="hero" aria-labelledby="headline">
-        <p className="eyebrow">This cycle's goal</p>
+        <p className="eyebrow">
+          This cycle's goal
+          <LeapTag stage="Review Progress" />
+        </p>
         <p className="cycle-goal">{cycle.goal_short ?? cycle.goal_title}</p>
         <p className="cycle">{cycleLine}</p>
         <KpiHero kpis={data.kpis} day={day} currentWeek={data.currentWeek} endDate={cycle.end_date} goalNote={cycle.goal_note} />

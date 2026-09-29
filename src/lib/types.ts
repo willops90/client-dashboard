@@ -1,5 +1,5 @@
 import type { CheckinState, CheckinWindow } from "./leap";
-import type { AssetPreview } from "./plan";
+import type { AssetPreview, MilestoneStatus } from "./plan";
 
 export type ExitRoadmapItem = { cycle: number; focus: string; dates?: string };
 
@@ -22,6 +22,7 @@ export type Cycle = {
   end_date: string;
   goal_title: string;
   goal_short: string | null;
+  milestones: Milestone[] | null;
   goal_note: string | null;
   goal_why: string | null;
   status: string;
@@ -47,7 +48,25 @@ export type Kpi = {
 export type PlanPair = { id: string; problem: string; initiative: string };
 
 export type MonthStatus = "upcoming" | "in_progress" | "met" | "missed";
-export type Month = { id: string; number: number; summary: string; goal_text: string | null; status: MonthStatus };
+export type Month = {
+  id: string;
+  number: number;
+  summary: string;
+  goal_text: string | null;
+  status: MonthStatus;
+  focus: string | null;
+  first_week: number | null;
+  last_week: number | null;
+};
+
+export type Milestone = { name: string; target?: string; status?: MilestoneStatus };
+
+export const MILESTONE_STATUS: Record<MilestoneStatus, { label: string; key: "good" | "warn" | "bad" | "idle" }> = {
+  not_started: { label: "Not started", key: "idle" },
+  in_progress: { label: "In progress", key: "warn" },
+  passed: { label: "Passed", key: "good" },
+  failed: { label: "Not passed", key: "bad" },
+};
 
 export type WeekStatus = "upcoming" | "this_week" | "done";
 export type Week = { id: string; number: number; meeting: string | null; asset: string; status: WeekStatus };
