@@ -3,17 +3,61 @@
     "name": "Northside Climate Co.",
     "slug": "northside",
     "industry": "HVAC",
-    "timezone": "Australia/Brisbane"
+    "timezone": "Australia/Brisbane",
+    "exit": {
+      "goal": "Sale-ready by mid-2028",
+      "cycles": 6,
+      "roadmap": [
+        {
+          "cycle": 1,
+          "focus": "Owner dependency"
+        },
+        {
+          "cycle": 2,
+          "focus": "Numbers a buyer can rely on"
+        },
+        {
+          "cycle": 3,
+          "focus": "Customer concentration"
+        },
+        {
+          "cycle": 4,
+          "focus": "Management depth"
+        },
+        {
+          "cycle": 5,
+          "focus": "Data room"
+        },
+        {
+          "cycle": 6,
+          "focus": "Equity story and sale preparation"
+        }
+      ]
+    }
   },
   "members": [
-    { "email": "dave@example.com", "name": "Dave", "role": "Owner" },
-    { "email": "priya@example.com", "name": "Priya", "role": "Ops lead" },
-    { "email": "sean@example.com", "name": "Sean", "role": "Scheduler" }
+    {
+      "email": "dave@example.com",
+      "name": "Dave",
+      "role": "Owner"
+    },
+    {
+      "email": "priya@example.com",
+      "name": "Priya",
+      "role": "Ops lead"
+    },
+    {
+      "email": "sean@example.com",
+      "name": "Sean",
+      "role": "Scheduler"
+    }
   ],
   "cycle": {
     "number": 1,
     "start_date": "2026-08-17",
-    "goal_title": "Cut Dave's hours in the business from 58 to 35 a week",
+    "goal_title": "Prove Northside runs without Dave: owner hours from 58 to 35 a week, then two clean weeks with Dave away.",
+    "goal_short": "Prove Northside runs without Dave.",
+    "goal_note": "Owner hours is one of the first things a buyer asks about in due diligence. The cycle ends with a two-week test with Dave away.",
     "goal_why": "A buyer pays less for a business that stops when the owner stops. Taking quoting and scheduling off Dave is the fastest way to show it doesn't."
   },
   "kpis": [
@@ -25,7 +69,11 @@
       "lower_is_better": true,
       "primary": true,
       "how_measured": "Measured from the timesheet Dave fills in each Friday. This is the number the whole cycle is judged on.",
-      "goals": { "30": 52, "60": 42, "90": 35 }
+      "goals": {
+        "30": 52,
+        "60": 42,
+        "90": 35
+      }
     },
     {
       "name": "Quotes sent without Dave",
@@ -34,7 +82,10 @@
       "target": 80,
       "lower_is_better": false,
       "how_measured": "A leading indicator, counted from the quotes inbox. When quoting moves off Dave, his hours follow a few weeks later.",
-      "goals": { "60": 60, "90": 80 }
+      "goals": {
+        "60": 60,
+        "90": 80
+      }
     },
     {
       "name": "Jobs scheduled by Sean",
@@ -43,17 +94,20 @@
       "target": 90,
       "lower_is_better": false,
       "how_measured": "A leading indicator. Counted from ServiceM8: jobs booked or moved by Sean, divided by all jobs that week.",
-      "goals": { "60": 70, "90": 90 }
+      "goals": {
+        "60": 70,
+        "90": 90
+      }
     }
   ],
   "plan_pairs": [
     {
       "problem": "Every quote over $5k waits for Dave, so jobs stall when he's on the tools or away.",
-      "initiative": "Build a quoting playbook and pricing matrix so Priya can quote up to $15k on her own."
+      "initiative": "Write the quoting SOP and pricing matrix into the SOP Kit so Priya can quote up to $15k on her own."
     },
     {
       "problem": "The schedule lives in Dave's head and phone. Nobody else can move a job.",
-      "initiative": "Move every job into ServiceM8 and make Sean the owner of the schedule."
+      "initiative": "Move every job into ServiceM8 and make Sean the owner of the schedule, with the scheduling SOP in the SOP Kit."
     },
     {
       "problem": "There are no written decision rights, so the team's default answer is \"ask Dave\".",
@@ -61,50 +115,679 @@
     }
   ],
   "months": [
-    { "number": 1, "summary": "Log two weeks of Dave's time and map every task he does to the person who should own it.", "goal": "52 hours a week." },
-    { "number": 2, "summary": "Hand quoting to Priya and scheduling to Sean, with Dave reviewing rather than doing.", "goal": "42 hours and 60% of quotes without Dave." },
-    { "number": 3, "summary": "Decision rights live, leadership meeting running, then a two-week test with Dave away.", "goal": "35 hours and a clean two weeks away." }
+    {
+      "number": 1,
+      "summary": "Log two weeks of Dave's time and map every task he does to the person who should own it.",
+      "goal": "52 hours a week."
+    },
+    {
+      "number": 2,
+      "summary": "Hand quoting to Priya and scheduling to Sean, with Dave reviewing rather than doing.",
+      "goal": "42 hours and 60% of quotes without Dave."
+    },
+    {
+      "number": 3,
+      "summary": "Decision rights live, leadership meeting running, then a two-week test with Dave away.",
+      "goal": "35 hours and a clean two weeks away."
+    }
   ],
   "weeks": [
-    { "number": 1, "meeting": "90-minute LEAP planning meeting", "asset": "Owner time audit begins" },
-    { "number": 2, "meeting": null, "asset": "Owner time audit, second week of logs" },
-    { "number": 3, "meeting": "Owner Exit Map workshop", "asset": "Owner Exit Map v1" },
-    { "number": 4, "meeting": null, "asset": "Quoting process mapped" },
-    { "number": 5, "meeting": "Quoting handover plan", "asset": "Pricing matrix v1" },
-    { "number": 6, "meeting": null, "asset": "Quoting SOP draft" },
-    { "number": 7, "meeting": "Quoting review and decision rights", "asset": "Decision Rights Matrix v1" },
-    { "number": 8, "meeting": null, "asset": "Scheduling SOP" },
-    { "number": 9, "meeting": "Scheduling handover and month 2 check", "asset": "ServiceM8 schedule board" },
-    { "number": 10, "meeting": null, "asset": "Leadership meeting agenda and scorecard" },
-    { "number": 11, "meeting": "Progress review: test each asset against the numbers", "asset": "Fix the weakest asset" },
-    { "number": 12, "meeting": null, "asset": "Two weeks with Dave away" },
-    { "number": 13, "meeting": "Debrief and plan the next 90 days", "asset": "Sale-readiness scorecard re-score" }
+    {
+      "number": 1,
+      "meeting": "90-minute LEAP planning meeting",
+      "asset": "Owner time audit begins"
+    },
+    {
+      "number": 2,
+      "meeting": null,
+      "asset": "Owner time audit, second week of logs"
+    },
+    {
+      "number": 3,
+      "meeting": "Owner Exit Map workshop",
+      "asset": "Owner Exit Map v1"
+    },
+    {
+      "number": 4,
+      "meeting": null,
+      "asset": "Quoting process mapped"
+    },
+    {
+      "number": 5,
+      "meeting": "Quoting handover plan",
+      "asset": "SOP Kit: pricing matrix v1"
+    },
+    {
+      "number": 6,
+      "meeting": null,
+      "asset": "SOP Kit: quoting SOP draft"
+    },
+    {
+      "number": 7,
+      "meeting": "Quoting review and decision rights",
+      "asset": "Decision Rights Matrix v1"
+    },
+    {
+      "number": 8,
+      "meeting": null,
+      "asset": "SOP Kit: scheduling SOP"
+    },
+    {
+      "number": 9,
+      "meeting": "Scheduling handover and month 2 check",
+      "asset": "Accountability Chart + role scorecards v1"
+    },
+    {
+      "number": 10,
+      "meeting": null,
+      "asset": "Leadership Operating Rhythm v1"
+    },
+    {
+      "number": 11,
+      "meeting": "Progress review: test each asset against the numbers",
+      "asset": "Fix the weakest asset"
+    },
+    {
+      "number": 12,
+      "meeting": null,
+      "asset": "Two weeks with Dave away"
+    },
+    {
+      "number": 13,
+      "meeting": "Debrief and plan the next 90 days",
+      "asset": "Sale-readiness scorecard re-score"
+    }
   ],
   "assets": [
-    { "name": "Owner Exit Map v1", "description": "Every task Dave does, how many hours it takes, and who takes it over. Built from two weeks of time logs.", "due_week": 3 },
-    { "name": "Quoting playbook and pricing matrix", "description": "Step-by-step quoting process plus price bands by job type, so quotes up to $15k don't need Dave.", "due_week": 6 },
-    { "name": "Decision Rights Matrix", "description": "Who decides, who approves and who just needs to know, for the 30 decisions that come up most.", "due_week": 7 },
-    { "name": "Scheduling SOP", "description": "How Sean builds, changes and confirms the weekly schedule in ServiceM8.", "due_week": 8 },
-    { "name": "Leadership meeting rhythm", "description": "A 30-minute weekly agenda and scorecard review Priya runs, so decisions happen without Dave in the room.", "due_week": 10 }
+    {
+      "name": "Owner Exit Map: Step Back Without Value Loss v1",
+      "description": "Every task Dave does, the hours it takes, and who takes it over.",
+      "due_week": 3,
+      "built_on": "Google Sheets + Lucid",
+      "preview": {
+        "blocks": [
+          {
+            "type": "table",
+            "title": "Dave's week at the start of the cycle",
+            "columns": [
+              "Task",
+              "Hrs/week at start",
+              "Goes to",
+              "Handover status"
+            ],
+            "rows": [
+              [
+                "On the tools",
+                "14",
+                "Technicians",
+                "Planned (month 3)"
+              ],
+              [
+                "Quoting",
+                "12",
+                "Priya",
+                "In progress"
+              ],
+              [
+                "Scheduling",
+                "9",
+                "Sean",
+                "In progress"
+              ],
+              [
+                "Customer calls",
+                "6",
+                "Priya",
+                "In progress"
+              ],
+              [
+                "Invoicing and chasing",
+                "5",
+                "Bookkeeper",
+                "Done"
+              ],
+              [
+                "Staff questions",
+                "5",
+                "Priya, via leadership meeting",
+                "Planned"
+              ],
+              [
+                "Supplier ordering",
+                "4",
+                "Sean",
+                "Done"
+              ],
+              [
+                "Admin and other",
+                "3",
+                "Dave keeps",
+                "—"
+              ]
+            ],
+            "footer": [
+              "Total",
+              "58",
+              "",
+              ""
+            ]
+          },
+          {
+            "type": "flow",
+            "title": "Who takes each task",
+            "links": [
+              {
+                "from": "On the tools",
+                "to": "Technicians",
+                "weight": 14
+              },
+              {
+                "from": "Quoting",
+                "to": "Priya",
+                "weight": 12
+              },
+              {
+                "from": "Scheduling",
+                "to": "Sean",
+                "weight": 9
+              },
+              {
+                "from": "Customer calls",
+                "to": "Priya",
+                "weight": 6
+              },
+              {
+                "from": "Invoicing and chasing",
+                "to": "Bookkeeper",
+                "weight": 5
+              },
+              {
+                "from": "Staff questions",
+                "to": "Priya",
+                "weight": 5
+              },
+              {
+                "from": "Supplier ordering",
+                "to": "Sean",
+                "weight": 4
+              },
+              {
+                "from": "Admin and other",
+                "to": "Dave",
+                "weight": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Critical Process Register + SOP Kit: Run It Without the Owner v1",
+      "description": "The processes a buyer would worry about, ranked by risk, each written up in one standard template.",
+      "due_week": 8,
+      "built_on": "Google Docs",
+      "preview": {
+        "blocks": [
+          {
+            "type": "table",
+            "title": "Critical Process Register",
+            "columns": [
+              "Process",
+              "Risk",
+              "Owner",
+              "SOP status"
+            ],
+            "rows": [
+              [
+                "Quoting jobs over $5k",
+                "High",
+                "Priya",
+                "Draft, waiting on pricing sign-off"
+              ],
+              [
+                "Weekly scheduling",
+                "High",
+                "Sean",
+                "Due week 8"
+              ],
+              [
+                "Warranty callouts",
+                "Medium",
+                "Sean",
+                "Planned"
+              ],
+              [
+                "Supplier ordering",
+                "Medium",
+                "Sean",
+                "Documented"
+              ],
+              [
+                "New starter onboarding",
+                "Low",
+                "Priya",
+                "Parked"
+              ]
+            ]
+          },
+          {
+            "type": "doc",
+            "title": "SOP: Quoting jobs over $5k",
+            "meta": [
+              {
+                "label": "Purpose",
+                "value": "Send accurate, profitable quotes for jobs over $5k without Dave."
+              },
+              {
+                "label": "Owner",
+                "value": "Priya"
+              },
+              {
+                "label": "Trigger",
+                "value": "A quote request lands in the quotes inbox."
+              },
+              {
+                "label": "Version",
+                "value": "v0.9 draft · last reviewed week 6"
+              }
+            ],
+            "sections": [
+              {
+                "heading": "Steps",
+                "steps": [
+                  "Log the request in ServiceM8 within two hours and acknowledge the customer.",
+                  "Book a site visit, or ask for photos and measurements if the job is straightforward.",
+                  "Pick the job type and price band from the pricing matrix below.",
+                  "Add parts from the current supplier price list and labour at standard hours.",
+                  "Check the margin is at least 35%. If it isn't, adjust the scope or escalate.",
+                  "Send the quote from the quotes inbox using the standard template.",
+                  "Follow up after three working days and log the outcome in ServiceM8."
+                ]
+              },
+              {
+                "heading": "Pricing matrix",
+                "table": {
+                  "columns": [
+                    "Job type",
+                    "Price band (inc. GST)"
+                  ],
+                  "rows": [
+                    [
+                      "Split system supply and install",
+                      "$2,800 – $4,500"
+                    ],
+                    [
+                      "Multi-head system install",
+                      "$6,500 – $12,000"
+                    ],
+                    [
+                      "Ducted system replacement",
+                      "$9,500 – $16,000"
+                    ],
+                    [
+                      "Coolroom repair",
+                      "$1,500 – $6,000"
+                    ],
+                    [
+                      "Commercial maintenance contract (per site, yearly)",
+                      "$3,000 – $8,000"
+                    ]
+                  ]
+                }
+              },
+              {
+                "heading": "Escalation",
+                "text": "Quotes over $15k go to Dave for approval before they're sent. Dave approves or comments within one working day."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Decision Rights Matrix: Clear Calls Without the Owner v1",
+      "description": "Who decides, who approves and who just needs to know.",
+      "due_week": 7,
+      "built_on": "Google Sheets",
+      "preview": {
+        "blocks": [
+          {
+            "type": "matrix",
+            "title": "Common decisions",
+            "people": [
+              "Dave",
+              "Priya",
+              "Sean"
+            ],
+            "key": {
+              "D": "Decides",
+              "A": "Approves",
+              "I": "Informed"
+            },
+            "rows": [
+              {
+                "decision": "Quotes under $15k",
+                "cells": [
+                  "I",
+                  "D",
+                  "I"
+                ]
+              },
+              {
+                "decision": "Quotes over $15k",
+                "cells": [
+                  "A",
+                  "D",
+                  "I"
+                ]
+              },
+              {
+                "decision": "Job scheduling changes",
+                "cells": [
+                  "I",
+                  "I",
+                  "D"
+                ]
+              },
+              {
+                "decision": "Supplier orders under $2k",
+                "cells": [
+                  "I",
+                  "I",
+                  "D"
+                ]
+              },
+              {
+                "decision": "Hiring",
+                "cells": [
+                  "A",
+                  "D",
+                  "I"
+                ]
+              },
+              {
+                "decision": "Pay rises",
+                "cells": [
+                  "D",
+                  "I",
+                  ""
+                ]
+              },
+              {
+                "decision": "Customer complaints",
+                "cells": [
+                  "I",
+                  "D",
+                  "I"
+                ]
+              },
+              {
+                "decision": "Warranty calls",
+                "cells": [
+                  "I",
+                  "I",
+                  "D"
+                ]
+              },
+              {
+                "decision": "Tool and van spend",
+                "cells": [
+                  "A",
+                  "I",
+                  "D"
+                ]
+              },
+              {
+                "decision": "Discounting",
+                "cells": [
+                  "A",
+                  "D",
+                  "I"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "A dash means that person isn't involved. Quotes over $15k: Priya prepares and decides the price, Dave approves before it goes out."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Accountability Chart + Role Scorecards: Every Seat Owned v1",
+      "description": "The management layer on one page: every seat, what it's accountable for, and how it's measured.",
+      "due_week": 9,
+      "built_on": "Lucid + Google Docs",
+      "preview": {
+        "blocks": [
+          {
+            "type": "seats",
+            "title": "Choose a seat to see its outcomes and measures",
+            "seats": [
+              {
+                "title": "Owner / MD",
+                "person": "Dave",
+                "outcomes": [
+                  "Sets direction and signs off each 90-day plan",
+                  "Approves quotes over $15k and major spend",
+                  "Coaches Priya and Sean instead of doing their work"
+                ],
+                "kpis": [
+                  "Owner hours a week",
+                  "Days away without a call-back"
+                ]
+              },
+              {
+                "title": "Operations & Sales Lead",
+                "person": "Priya",
+                "reports_to": "Owner / MD",
+                "outcomes": [
+                  "Every quote out within two working days",
+                  "Runs the weekly leadership meeting",
+                  "Customers looked after without Dave"
+                ],
+                "kpis": [
+                  "% of quotes sent without Dave",
+                  "Quote turnaround time"
+                ]
+              },
+              {
+                "title": "Scheduling & Field Coordinator",
+                "person": "Sean",
+                "reports_to": "Owner / MD",
+                "outcomes": [
+                  "Next week's schedule built and confirmed by Friday",
+                  "Supplier orders placed on time",
+                  "Warranty callouts booked within 48 hours"
+                ],
+                "kpis": [
+                  "Jobs scheduled by Sean",
+                  "Call-backs"
+                ]
+              },
+              {
+                "title": "Technicians",
+                "person": "Field team",
+                "reports_to": "Scheduling & Field Coordinator",
+                "outcomes": [
+                  "Jobs done right the first time",
+                  "Job sheets closed out the same day",
+                  "Van stock kept to the list"
+                ],
+                "kpis": [
+                  "Call-backs",
+                  "Job sheets closed same day"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Leadership Operating Rhythm: Decisions Without the Owner in the Room v1",
+      "description": "A 30-minute weekly meeting Priya runs, so decisions happen without Dave.",
+      "due_week": 10,
+      "built_on": "Google Docs",
+      "preview": {
+        "blocks": [
+          {
+            "type": "table",
+            "title": "Weekly agenda (30 minutes, run by Priya)",
+            "columns": [
+              "Item",
+              "Minutes"
+            ],
+            "rows": [
+              [
+                "Numbers: the scorecard below",
+                "5"
+              ],
+              [
+                "Wins",
+                "3"
+              ],
+              [
+                "Issues: discuss, decide, assign",
+                "15"
+              ],
+              [
+                "Actions: owners and dates",
+                "5"
+              ],
+              [
+                "Close: one line each",
+                "2"
+              ]
+            ],
+            "footer": [
+              "Total",
+              "30"
+            ]
+          },
+          {
+            "type": "table",
+            "title": "Weekly scorecard",
+            "note": "Actuals are from week 6.",
+            "columns": [
+              "Measure",
+              "Target",
+              "Actual"
+            ],
+            "rows": [
+              [
+                "Owner hours",
+                "47",
+                "47"
+              ],
+              [
+                "% of quotes without Dave",
+                "40%",
+                "46%"
+              ],
+              [
+                "Jobs scheduled by Sean",
+                "42%",
+                "64%"
+              ],
+              [
+                "Quote turnaround",
+                "2 days",
+                "3 days"
+              ],
+              [
+                "Call-backs",
+                "2 or fewer",
+                "1"
+              ]
+            ]
+          },
+          {
+            "type": "text",
+            "text": "Once a month the meeting runs to 60 minutes: the month's numbers, progress on the 90-day plan, and one issue worth a deeper look."
+          }
+        ]
+      }
+    }
   ],
   "scorecard": [
-    { "drag": "owner_dependency", "score": 3, "target": 5, "in_focus": true, "note": "This cycle's focus" },
-    { "drag": "management_layer", "score": 3, "target": 4, "in_focus": true, "note": "Improves as a side effect" },
-    { "drag": "reliable_numbers", "score": 4, "note": "Parked" },
-    { "drag": "customer_concentration", "score": 5, "note": "Parked" },
-    { "drag": "revenue_quality", "score": 7, "note": "Healthy: 60% maintenance contracts" }
+    {
+      "drag": "owner_dependency",
+      "score": 3,
+      "target": 5,
+      "in_focus": true,
+      "note": "This cycle's focus"
+    },
+    {
+      "drag": "management_layer",
+      "score": 3,
+      "target": 4,
+      "in_focus": true,
+      "note": "Improves as a side effect"
+    },
+    {
+      "drag": "reliable_numbers",
+      "score": 4,
+      "note": "Parked"
+    },
+    {
+      "drag": "customer_concentration",
+      "score": 5,
+      "note": "Parked"
+    },
+    {
+      "drag": "revenue_quality",
+      "score": 7,
+      "note": "Healthy: 60% maintenance contracts"
+    }
   ],
   "actions": [
-    { "owner": "Dave", "title": "Sign off pricing matrix v1", "due": "2026-09-25" },
-    { "owner": "Priya", "title": "Quote five jobs over $5k without Dave and log the time each takes", "due": "2026-10-02" },
-    { "owner": "Sean", "title": "Move every October job into the ServiceM8 schedule", "due": "2026-09-30" },
-    { "owner": "Dave", "title": "Forward all quote requests to the quotes inbox instead of answering them", "due": "2026-09-24" },
-    { "owner": "Will", "title": "Record Loom feedback on Priya's quoting SOP draft", "due": "2026-09-29" },
-    { "owner": "Will", "title": "Draft the decision-rights matrix for Thursday", "due": "2026-10-01" }
+    {
+      "owner": "Dave",
+      "title": "Sign off pricing matrix v1",
+      "due": "2026-09-25"
+    },
+    {
+      "owner": "Priya",
+      "title": "Quote five jobs over $5k without Dave and log the time each takes",
+      "due": "2026-10-02"
+    },
+    {
+      "owner": "Sean",
+      "title": "Move every October job into the ServiceM8 schedule",
+      "due": "2026-09-30"
+    },
+    {
+      "owner": "Dave",
+      "title": "Forward all quote requests to the quotes inbox instead of answering them",
+      "due": "2026-09-24"
+    },
+    {
+      "owner": "Will",
+      "title": "Record Loom feedback on Priya's quoting SOP draft",
+      "due": "2026-09-29"
+    },
+    {
+      "owner": "Will",
+      "title": "Draft the decision-rights matrix for Thursday",
+      "due": "2026-10-01"
+    }
   ],
   "parked": [
-    { "text": "The council maintenance contract is 24% of revenue.", "category": "Customer concentration" },
-    { "text": "Management accounts come quarterly from the bookkeeper, not monthly from Xero.", "category": "Numbers a buyer can rely on" },
-    { "text": "Second apprentice intake and a fourth van.", "category": "Growth, after the business can run without Dave" }
+    {
+      "text": "The council maintenance contract is 24% of revenue.",
+      "category": "Customer concentration",
+      "cycle": 3
+    },
+    {
+      "text": "Management accounts come quarterly from the bookkeeper, not monthly from Xero.",
+      "category": "Numbers a buyer can rely on",
+      "cycle": 2
+    },
+    {
+      "text": "Second apprentice intake and a fourth van.",
+      "category": "Growth, after the business can run without Dave"
+    }
   ]
 }

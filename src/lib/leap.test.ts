@@ -188,3 +188,18 @@ describe("formatValue", () => {
     expect(formatValue(47.25, "hrs")).toBe("47.3 hrs");
   });
 });
+
+import { roadmapCycleRange, roadmapStatus } from "./leap";
+
+describe("exit roadmap", () => {
+  it("works out each cycle's months from the current cycle", () => {
+    expect(roadmapCycleRange("2026-08-17", 1, 1)).toBe("Aug–Nov 2026");
+    expect(roadmapCycleRange("2026-08-17", 1, 2)).toBe("Nov 2026–Feb 2027");
+    expect(roadmapCycleRange("2026-08-17", 1, 3)).toBe("Feb–May 2027");
+    expect(roadmapCycleRange("2026-08-17", 1, 6)).toBe("Nov 2027–Feb 2028");
+  });
+
+  it("labels cycles relative to the current one", () => {
+    expect([1, 2, 3, 4].map((c) => roadmapStatus(c, 2))).toEqual(["done", "now", "next", "planned"]);
+  });
+});

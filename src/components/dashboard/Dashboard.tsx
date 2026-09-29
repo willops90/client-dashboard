@@ -5,6 +5,7 @@ import { KpiHero } from "./KpiHero";
 import { Fortnight } from "./Fortnight";
 import { AssetsSection, PlanSection, ScorecardSection, WeeksSection } from "./PlanSections";
 import { ParkedSection } from "./Parked";
+import { ExitStrip } from "./ExitStrip";
 
 /** The client dashboard. The same template renders every client, the advisor view and /demo. */
 export function Dashboard({ data, advisorPanel }: { data: DashboardData; advisorPanel?: React.ReactNode }) {
@@ -19,19 +20,22 @@ export function Dashboard({ data, advisorPanel }: { data: DashboardData; advisor
 
   return (
     <div className="wrap">
+      <ExitStrip data={data} />
       <Header data={data} />
       <CheckinBanner data={data} />
       {advisorPanel}
       <section className="hero" aria-labelledby="headline">
+        <p className="eyebrow">This cycle's goal</p>
+        <p className="cycle-goal">{cycle.goal_short ?? cycle.goal_title}</p>
         <p className="cycle">{cycleLine}</p>
-        <KpiHero kpis={data.kpis} day={day} currentWeek={data.currentWeek} endDate={cycle.end_date} />
+        <KpiHero kpis={data.kpis} day={day} currentWeek={data.currentWeek} endDate={cycle.end_date} goalNote={cycle.goal_note} />
       </section>
       <Fortnight data={data} />
       <PlanSection data={data} />
       <AssetsSection data={data} />
       <WeeksSection data={data} />
       <ScorecardSection data={data} />
-      <ParkedSection items={data.parked} slug={client.slug} canAdd={viewer.kind !== "demo"} />
+      <ParkedSection items={data.parked} slug={client.slug} canAdd={viewer.kind !== "demo"} roadmap={client.exit_roadmap} />
       <footer>
         {viewer.kind === "demo"
           ? `${client.name}, its people and every number on this page are made up to show how an Owner Optional client dashboard works. `

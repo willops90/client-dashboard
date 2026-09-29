@@ -23,6 +23,63 @@ export const DRAGS = [
   "revenue_quality",
 ] as const;
 
+// Asset previews are built from a few generic block types, so every client's
+// assets render through the same components with their own data.
+const previewTable = z.object({
+  columns: z.array(z.string()).min(1),
+  rows: z.array(z.array(z.string())),
+  footer: z.array(z.string()).optional(),
+});
+
+const previewBlock = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("text"), text }),
+  z.object({ type: z.literal("table"), title: z.string().optional(), note: z.string().optional() }).extend(previewTable.shape),
+  z.object({
+    type: z.literal("flow"),
+    title: z.string().optional(),
+    links: z.array(z.object({ from: text, to: text, weight: z.number().positive().optional() })).min(1),
+  }),
+  z.object({
+    type: z.literal("doc"),
+    title: text,
+    meta: z.array(z.object({ label: text, value: text })).optional(),
+    sections: z.array(
+      z.object({
+        heading: text,
+        text: z.string().optional(),
+        steps: z.array(z.string()).optional(),
+        table: previewTable.optional(),
+      }),
+    ),
+  }),
+  z.object({
+    type: z.literal("matrix"),
+    title: z.string().optional(),
+    people: z.array(text).min(1),
+    key: z.record(z.string(), z.string()),
+    rows: z.array(z.object({ decision: text, cells: z.array(z.string()) })).min(1),
+  }),
+  z.object({
+    type: z.literal("seats"),
+    title: z.string().optional(),
+    seats: z
+      .array(
+        z.object({
+          title: text,
+          person: text,
+          reports_to: z.string().optional(),
+          outcomes: z.array(z.string()),
+          kpis: z.array(z.string()),
+        }),
+      )
+      .min(1),
+  }),
+]);
+
+export const assetPreviewSchema = z.object({ blocks: z.array(previewBlock).min(1) });
+export type AssetPreview = z.infer<typeof assetPreviewSchema>;
+export type PreviewBlock = z.infer<typeof previewBlock>;
+
 export const planSchema = z
   .object({
     client: z.object({
@@ -31,6 +88,21 @@ export const planSchema = z
       industry: z.string().optional(),
       timezone: z.string().refine(validTimeZone, "must be an IANA timezone such as Australia/Sydney"),
       status: z.enum(["active", "paused", "offboarded"]).optional(),
+      exit: z
+        .object({
+          goal: text.describe('e.g. "Sale-ready by mid-2028"'),
+          cycles: z.number().int().min(1).describe("roughly how many 90-day cycles to get there"),
+          roadmap: z
+            .array(
+              z.object({
+                cycle: z.number().int().min(1),
+                focus: text,
+                dates: z.string().optional().describe("leave out to work them out from the cycle start"),
+              }),
+            )
+            .optional(),
+        })
+        .optional(),
     }),
     members: z
       .array(
@@ -45,6 +117,8 @@ export const planSchema = z
       number: z.number().int().min(1),
       start_date: isoDate,
       goal_title: text,
+      goal_short: z.string().optional().describe("the goal in a few words, shown above the chart"),
+      goal_note: z.string().optional().describe("one line of context under the chart"),
       goal_why: z.string().optional(),
       status: z.enum(["planned", "active", "review", "closed"]).optional(),
     }),
@@ -87,6 +161,8 @@ export const planSchema = z
         description: z.string().optional(),
         due_week: z.number().int().min(1).max(13).nullable().optional(),
         link: z.string().url().nullable().optional(),
+        built_on: z.string().optional(),
+        preview: assetPreviewSchema.optional(),
       }),
     ),
     scorecard: z.array(
@@ -107,12 +183,35 @@ export const planSchema = z
         }),
       )
       .optional(),
-    parked: z.array(z.object({ text, category: z.string().optional() })).optional(),
+    parked: z
+      .array(z.object({ text, category: z.string().optional(), cycle: z.number().int().min(1).optional() }))
+      .optional(),
   })
   .superRefine((plan, ctx) => {
     const primaries = plan.kpis.filter((k) => k.primary).length;
     if (primaries !== 1) {
       ctx.addIssue({ code: "custom", path: ["kpis"], message: `exactly one KPI needs "primary": true (found ${primaries})` });
+    }
+    plan.assets.forEach((a, i) =>
+      a.preview?.blocks.forEach((b, j) => {
+        const path = ["assets", i, "preview", "blocks", j];
+        if (b.type === "matrix") {
+          b.rows.forEach((r, k) => {
+            if (r.cells.length !== b.people.length) {
+              ctx.addIssue({ code: "custom", path: [...path, "rows", k], message: `needs ${b.people.length} cells, one per person` });
+            }
+            r.cells.forEach((c) => {
+              if (c && !(c in b.key)) ctx.addIssue({ code: "custom", path: [...path, "rows", k], message: `"${c}" isn't in the key` });
+            });
+          });
+        }
+        if (b.type === "table" && b.rows.some((r) => r.length !== b.columns.length)) {
+          ctx.addIssue({ code: "custom", path, message: `every row needs ${b.columns.length} cells` });
+        }
+      }),
+    );
+    if (plan.client.exit?.roadmap?.some((r) => r.cycle > plan.client.exit!.cycles)) {
+      ctx.addIssue({ code: "custom", path: ["client", "exit", "roadmap"], message: "a roadmap cycle is beyond the number of cycles" });
     }
     const dupes = (xs: (string | number)[]) => xs.filter((x, i) => xs.indexOf(x) !== i);
     for (const [path, values] of [

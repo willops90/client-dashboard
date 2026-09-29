@@ -77,6 +77,19 @@ no longer in the file are left alone and listed as warnings.
 Action owners are a member's `name`, or the advisor's display name (or `"advisor"`).
 Optional `parked` items in the file are added to the client's parked list.
 
+Optional fields, all shown in the Northside example:
+
+- `client.exit`: the exit goal, roughly how many cycles to get there, and an
+  indicative roadmap of each cycle's focus. Shown as the strip at the top.
+  Future cycle dates are worked out from the current cycle unless you give them.
+- `cycle.goal_short` and `cycle.goal_note`: the goal in a few words above the
+  chart, and one line of context under it.
+- `assets[].built_on` and `assets[].preview`: the "Built on" tag, and a preview
+  a client can open, made of blocks: `table`, `flow` (task → person map),
+  `doc` (an SOP-style document), `matrix` (decision rights), `seats`
+  (accountability chart) and `text`.
+- `parked[].cycle`: which future cycle a parked item is pencilled in for.
+
 Real client plan files are gitignored. Keep them somewhere private.
 
 ## Local development

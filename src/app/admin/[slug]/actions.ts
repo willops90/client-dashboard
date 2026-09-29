@@ -26,7 +26,7 @@ function done(slug: string, ok: string): FormState {
 }
 
 const STATUSES = {
-  assets: ["not_started", "drafting", "waiting_signoff", "done"],
+  assets: ["not_started", "in_progress", "drafting", "waiting_signoff", "done"],
   months: ["upcoming", "in_progress", "met", "missed"],
   weeks: ["upcoming", "this_week", "done"],
 } as const;

@@ -1,6 +1,19 @@
 import type { CheckinState, CheckinWindow } from "./leap";
+import type { AssetPreview } from "./plan";
 
-export type Client = { id: string; name: string; slug: string; timezone: string; industry: string | null; status: string };
+export type ExitRoadmapItem = { cycle: number; focus: string; dates?: string };
+
+export type Client = {
+  id: string;
+  name: string;
+  slug: string;
+  timezone: string;
+  industry: string | null;
+  status: string;
+  exit_goal: string | null;
+  exit_cycles_estimate: number | null;
+  exit_roadmap: ExitRoadmapItem[] | null;
+};
 
 export type Cycle = {
   id: string;
@@ -8,6 +21,8 @@ export type Cycle = {
   start_date: string;
   end_date: string;
   goal_title: string;
+  goal_short: string | null;
+  goal_note: string | null;
   goal_why: string | null;
   status: string;
 };
@@ -47,7 +62,7 @@ export type Action = {
   owner_name: string;
 };
 
-export type AssetStatus = "not_started" | "drafting" | "waiting_signoff" | "done";
+export type AssetStatus = "not_started" | "in_progress" | "drafting" | "waiting_signoff" | "done";
 export type Asset = {
   id: string;
   name: string;
@@ -55,12 +70,14 @@ export type Asset = {
   status: AssetStatus;
   due_week: number | null;
   link: string | null;
+  built_on: string | null;
+  preview: AssetPreview | null;
 };
 
 export type Drag = "owner_dependency" | "management_layer" | "reliable_numbers" | "customer_concentration" | "revenue_quality";
 export type Score = { id: string; drag: Drag; score: number; target: number | null; in_focus: boolean; note: string | null };
 
-export type Parked = { id: string; text: string; category: string | null };
+export type Parked = { id: string; text: string; category: string | null; planned_cycle: number | null };
 
 export type Update = { id: string; kind: "monday" | "recap"; sent_on: string; body: string };
 
@@ -120,6 +137,7 @@ export const DRAG_LABELS: Record<Drag, string> = {
 
 export const ASSET_STATUS: Record<AssetStatus, { label: string; key: "good" | "warn" | "idle" }> = {
   not_started: { label: "Not started", key: "idle" },
+  in_progress: { label: "In progress", key: "warn" },
   drafting: { label: "Drafting", key: "warn" },
   waiting_signoff: { label: "Waiting on sign-off", key: "warn" },
   done: { label: "Done", key: "good" },

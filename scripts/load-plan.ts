@@ -79,11 +79,23 @@ async function main() {
 }
 
 async function loadClient(db: Db, plan: Plan, log: string[]): Promise<string> {
-  const { name, slug, industry, timezone, status } = plan.client;
+  const { name, slug, industry, timezone, status, exit } = plan.client;
   const row = must(
     await db
       .from("clients")
-      .upsert({ name, slug, industry: industry ?? null, timezone, ...(status ? { status } : {}) }, { onConflict: "slug" })
+      .upsert(
+        {
+          name,
+          slug,
+          industry: industry ?? null,
+          timezone,
+          exit_goal: exit?.goal ?? null,
+          exit_cycles_estimate: exit?.cycles ?? null,
+          exit_roadmap: exit?.roadmap ?? null,
+          ...(status ? { status } : {}),
+        },
+        { onConflict: "slug" },
+      )
       .select("id")
       .single(),
     "Saving client",
@@ -145,6 +157,8 @@ async function loadCycle(db: Db, plan: Plan, clientId: string, log: string[]): P
           number: c.number,
           start_date: c.start_date,
           goal_title: c.goal_title,
+          goal_short: c.goal_short ?? null,
+          goal_note: c.goal_note ?? null,
           goal_why: c.goal_why ?? null,
           ...(c.status ? { status: c.status } : {}),
         },
@@ -247,6 +261,8 @@ async function loadAssets(db: Db, plan: Plan, cycleId: string, log: string[]) {
           description: a.description ?? null,
           due_week: a.due_week ?? null,
           link: a.link ?? null,
+          built_on: a.built_on ?? null,
+          preview: a.preview ?? null,
           sort: i,
         })),
         { onConflict: "cycle_id,name" },
@@ -315,13 +331,25 @@ async function loadActions(
 
 async function loadParked(db: Db, plan: Plan, clientId: string, log: string[]) {
   if (!plan.parked?.length) return;
-  const existing = must(await db.from("parked_items").select("text").eq("client_id", clientId), "Reading parked items") as {
+  const existing = must(await db.from("parked_items").select("id, text").eq("client_id", clientId), "Reading parked items") as {
+    id: string;
     text: string;
   }[];
   const fresh = plan.parked.filter((p) => !existing.some((e) => e.text === p.text));
+  for (const p of plan.parked) {
+    const match = existing.find((e) => e.text === p.text);
+    if (match) {
+      must(
+        await db.from("parked_items").update({ category: p.category ?? null, planned_cycle: p.cycle ?? null }).eq("id", match.id),
+        "Updating parked item",
+      );
+    }
+  }
   if (fresh.length) {
     must(
-      await db.from("parked_items").insert(fresh.map((p) => ({ client_id: clientId, text: p.text, category: p.category ?? null }))),
+      await db
+        .from("parked_items")
+        .insert(fresh.map((p) => ({ client_id: clientId, text: p.text, category: p.category ?? null, planned_cycle: p.cycle ?? null }))),
       "Saving parked items",
     );
   }

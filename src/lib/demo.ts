@@ -75,10 +75,22 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
     start_date: start,
     end_date: at(89),
     goal_title: plan.cycle.goal_title,
+    goal_short: plan.cycle.goal_short ?? null,
+    goal_note: plan.cycle.goal_note ?? null,
     goal_why: plan.cycle.goal_why ?? null,
     status: "active",
   };
-  const client = { id: "demo", name: plan.client.name, slug: "demo", timezone: tz, industry: plan.client.industry ?? null, status: "active" };
+  const client = {
+    id: "demo",
+    name: plan.client.name,
+    slug: "demo",
+    timezone: tz,
+    industry: plan.client.industry ?? null,
+    status: "active",
+    exit_goal: plan.client.exit?.goal ?? null,
+    exit_cycles_estimate: plan.client.exit?.cycles ?? null,
+    exit_roadmap: plan.client.exit?.roadmap ?? null,
+  };
 
   return {
     client,
@@ -120,6 +132,8 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
       status: demoAssetStatus[a.name] ?? "not_started",
       due_week: a.due_week ?? null,
       link: a.link ?? null,
+      built_on: a.built_on ?? null,
+      preview: a.preview ?? null,
     })),
     scorecard: plan.scorecard.map((s, i) => ({
       id: `s${i}`,
@@ -129,7 +143,7 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
       in_focus: !!s.in_focus,
       note: s.note ?? null,
     })),
-    parked: (plan.parked ?? []).map((p, i) => ({ id: `pk${i}`, text: p.text, category: p.category ?? null })),
+    parked: (plan.parked ?? []).map((p, i) => ({ id: `pk${i}`, text: p.text, category: p.category ?? null, planned_cycle: p.cycle ?? null })),
     latestUpdate: { id: "u1", kind: "monday", sent_on: at(demoUpdate.offset), body: demoUpdate.body },
     nextMeeting: {
       id: "mt1",

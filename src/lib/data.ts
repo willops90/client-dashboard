@@ -61,7 +61,7 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
         .select("id, title, due_date, done_at, owner_is_advisor, owner_member_id")
         .eq("cycle_id", cycle.id)
         .order("due_date"),
-      supabase.from("assets").select("id, name, description, status, due_week, link").eq("cycle_id", cycle.id).order("sort"),
+      supabase.from("assets").select("id, name, description, status, due_week, link, built_on, preview").eq("cycle_id", cycle.id).order("sort"),
       supabase
         .from("scorecard_scores")
         .select("id, drag, score, target, in_focus, note")
@@ -70,7 +70,7 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
         .order("created_at"),
       supabase
         .from("parked_items")
-        .select("id, text, category")
+        .select("id, text, category, planned_cycle")
         .eq("client_id", client.id)
         .is("picked_up_in_cycle_id", null)
         .order("created_at"),

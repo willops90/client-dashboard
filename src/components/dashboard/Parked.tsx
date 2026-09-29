@@ -2,9 +2,19 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { addParkedItem, type FormState } from "@/app/c/[slug]/actions";
-import type { Parked } from "@/lib/types";
+import type { ExitRoadmapItem, Parked } from "@/lib/types";
 
-export function ParkedSection({ items, slug, canAdd }: { items: Parked[]; slug: string; canAdd: boolean }) {
+export function ParkedSection({
+  items,
+  slug,
+  canAdd,
+  roadmap,
+}: {
+  items: Parked[];
+  slug: string;
+  canAdd: boolean;
+  roadmap?: ExitRoadmapItem[] | null;
+}) {
   return (
     <section className="block" aria-labelledby="h-parked">
       <h2 id="h-parked">Parked for a future cycle</h2>
@@ -13,7 +23,12 @@ export function ParkedSection({ items, slug, canAdd }: { items: Parked[]; slug: 
         <ol className="parked">
           {items.map((p) => (
             <li key={p.id}>
-              {p.text} {p.category && <span>{p.category.replace(/\.?$/, ".")}</span>}
+              {p.text} {p.category && <span>{p.category.replace(/\.?$/, ".")}</span>}{" "}
+              {p.planned_cycle && (
+                <span className="tag teal" title={roadmap?.find((r) => r.cycle === p.planned_cycle)?.focus}>
+                  Cycle {p.planned_cycle}
+                </span>
+              )}
             </li>
           ))}
         </ol>

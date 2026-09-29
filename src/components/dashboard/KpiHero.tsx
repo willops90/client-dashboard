@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { BUILD_PHASE_END_DAY, CYCLE_DAYS, formatDate, formatValue, kpiStatus, latestReading, readingDay } from "@/lib/leap";
 import type { Kpi } from "@/lib/types";
 
-type Props = { kpis: Kpi[]; day: number; currentWeek: number; endDate: string };
+type Props = { kpis: Kpi[]; day: number; currentWeek: number; endDate: string; goalNote?: string | null };
 
-export function KpiHero({ kpis, day, currentWeek, endDate }: Props) {
+export function KpiHero({ kpis, day, currentWeek, endDate, goalNote }: Props) {
   const [selectedId, setSelectedId] = useState(() => (kpis.find((k) => k.is_primary) ?? kpis[0])?.id);
   const kpi = kpis.find((k) => k.id === selectedId) ?? kpis[0];
   if (!kpi) return <p className="empty">No KPIs have been loaded for this cycle yet.</p>;
@@ -59,6 +59,7 @@ export function KpiHero({ kpis, day, currentWeek, endDate }: Props) {
         </div>
       </div>
       {kpi.how_measured && <p className="why">{kpi.how_measured}</p>}
+      {goalNote && <p className="why goal-note">{goalNote}</p>}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { BUILD_PHASE_END_DAY, formatDate, monthRange, weekStart, addDays } from "@/lib/leap";
 import { ASSET_STATUS, DRAG_LABELS, MONTH_STATUS, WEEK_STATUS, type DashboardData, type WeekStatus } from "@/lib/types";
 import { StatusSelect } from "@/components/advisor/StatusSelect";
+import { AssetPreviewControl } from "./AssetCard";
 
 export function PlanSection({ data }: { data: DashboardData }) {
   const { cycle, months, planPairs, day, viewer, client } = data;
@@ -69,19 +70,30 @@ export function AssetsSection({ data }: { data: DashboardData }) {
       <h2 id="h-assets">Assets we're building</h2>
       <p className="lede">These stay with {shortName} after the cycle ends. You own them and keep them up to date.</p>
       {assets.length ? (
-        <ul className="assets">
+        <ul className="asset-cards">
           {assets.map((a) => {
             const st = ASSET_STATUS[a.status];
-            const label = a.status === "not_started" && a.due_week ? `Due week ${a.due_week}` : st.label;
+            const label =
+              a.status === "not_started" && a.due_week
+                ? `Due week ${a.due_week}`
+                : a.status === "drafting" && a.due_week
+                  ? `Drafting (week ${a.due_week})`
+                  : st.label;
             return (
-              <li key={a.id}>
-                <span className="n">{a.link ? <a href={a.link} target="_blank" rel="noreferrer">{a.name}</a> : a.name}</span>
-                {viewer.kind === "advisor" ? (
-                  <StatusSelect slug={client.slug} table="assets" id={a.id} value={a.status} options={ASSET_STATUS} label={`${a.name} status`} />
-                ) : (
-                  <span className={`tag ${st.key}`}>{label}</span>
-                )}
+              <li key={a.id} className="asset-card">
+                <div className="asset-top">
+                  <h3 className="n">{a.link ? <a href={a.link} target="_blank" rel="noreferrer">{a.name}</a> : a.name}</h3>
+                  {viewer.kind === "advisor" ? (
+                    <StatusSelect slug={client.slug} table="assets" id={a.id} value={a.status} options={ASSET_STATUS} label={`${a.name} status`} />
+                  ) : (
+                    <span className={`tag ${st.key}`}>{label}</span>
+                  )}
+                </div>
                 {a.description && <p className="x">{a.description}</p>}
+                <div className="asset-foot">
+                  {a.built_on && <span className="built-on">Built on {a.built_on}</span>}
+                  <AssetPreviewControl asset={a} />
+                </div>
               </li>
             );
           })}

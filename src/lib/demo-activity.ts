@@ -13,10 +13,10 @@ export const demoReadings: Record<string, number[]> = {
 
 export const demoMonthStatus = { 1: "met", 2: "in_progress", 3: "upcoming" } as const;
 
-export const demoAssetStatus: Record<string, "done" | "waiting_signoff" | "drafting" | "not_started"> = {
-  "Owner Exit Map v1": "done",
-  "Quoting playbook and pricing matrix": "waiting_signoff",
-  "Decision Rights Matrix": "drafting",
+export const demoAssetStatus: Record<string, "done" | "in_progress" | "waiting_signoff" | "drafting" | "not_started"> = {
+  "Owner Exit Map: Step Back Without Value Loss v1": "done",
+  "Critical Process Register + SOP Kit: Run It Without the Owner v1": "in_progress",
+  "Decision Rights Matrix: Clear Calls Without the Owner v1": "drafting",
 };
 
 /** Actions marked done, and the day offset they were done on. */

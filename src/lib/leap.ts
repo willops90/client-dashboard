@@ -265,3 +265,27 @@ export function cycleClock(timeZone: string, startDate: string, submittedWeeks: 
     checkinState: checkinState(window, submittedWeeks),
   };
 }
+
+// ---------------------------------------------------------------------------
+// Exit roadmap
+
+/** Cycles run back to back, 13 weeks apart, so future dates follow from the current one. */
+export const CYCLE_SPACING_DAYS = 91;
+
+/** "Aug–Nov 2026", or "Nov 2026–Feb 2027" when a cycle crosses a year. */
+export function roadmapCycleRange(currentStart: string, currentNumber: number, cycle: number): string {
+  const from = addDays(currentStart, (cycle - currentNumber) * CYCLE_SPACING_DAYS);
+  const to = addDays(from, CYCLE_DAYS - 1);
+  const month = (d: string) => formatDate(d, { month: "short" });
+  const [fy, ty] = [from.slice(0, 4), to.slice(0, 4)];
+  return fy === ty ? `${month(from)}–${month(to)} ${ty}` : `${month(from)} ${fy}–${month(to)} ${ty}`;
+}
+
+export type RoadmapStatus = "done" | "now" | "next" | "planned";
+
+export function roadmapStatus(cycle: number, currentNumber: number): RoadmapStatus {
+  if (cycle < currentNumber) return "done";
+  if (cycle === currentNumber) return "now";
+  if (cycle === currentNumber + 1) return "next";
+  return "planned";
+}

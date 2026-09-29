@@ -242,3 +242,88 @@ details.edit[open] { margin-bottom: 10px; }
 .checkin-list { list-style: none; padding: 0; margin: 0; }
 .checkin-list li { padding: 12px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 6px; }
 .checkin-list .meta { color: var(--muted); font-size: 13.5px; }
+
+/* exit strip */
+.exit-strip { margin: 12px 0 0; border: 1px solid var(--rule); border-radius: 10px; background: var(--sheet); font-size: 14px; }
+.exit-strip summary { cursor: pointer; padding: 8px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; list-style: none; }
+.exit-strip summary::-webkit-details-marker { display: none; }
+.exit-strip summary b { font-weight: 650; }
+.exit-toggle { margin-left: auto; color: var(--teal); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.exit-toggle::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+.exit-strip[open] .exit-toggle::after { transform: rotate(-135deg) translateY(-1px); }
+.exit-body { padding: 0 14px 12px; }
+.exit-body .hint { margin: 0 0 8px; }
+.roadmap { min-width: 520px; }
+.tag.teal { background: var(--teal-soft); color: var(--teal); }
+
+/* this cycle's goal */
+.eyebrow { margin: 0 0 4px; font-size: 13px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.cycle-goal { margin: 0 0 10px; font-size: clamp(20px, 2.6vw, 26px); font-weight: 700; font-stretch: 110%; line-height: 1.2; }
+.why.goal-note { color: var(--ink); }
+
+/* asset cards */
+.asset-cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.asset-card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; }
+.asset-top { display: flex; justify-content: space-between; align-items: start; gap: 8px 16px; flex-wrap: wrap; }
+.asset-card .n { margin: 0; font-size: 16px; font-weight: 650; line-height: 1.35; flex: 1 1 260px; }
+.asset-card .x { color: var(--muted); font-size: 14.5px; margin: 6px 0 0; max-width: 72ch; }
+.asset-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+.built-on { display: inline-block; font-size: 12.5px; padding: 2px 9px; border-radius: 6px; border: 1px solid var(--rule); color: var(--muted); }
+.preview-btn { margin-left: auto; }
+.preview-inline { margin-top: 14px; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+.preview-dialog { width: min(900px, calc(100% - 32px)); max-height: 86vh; overflow: auto; padding: 22px 24px;
+  border: 1px solid var(--rule); border-radius: 14px; background: var(--paper); color: var(--ink); }
+.preview-dialog::backdrop { background: rgba(10, 20, 25, .55); }
+.preview-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 14px; }
+.preview-head h3 { font-size: 19px; margin: 0 0 6px; font-stretch: 106%; }
+.preview-foot { margin: 14px 0 0; }
+
+/* preview blocks */
+.pv { display: grid; gap: 22px; }
+.pv h4 { margin: 0 0 8px; font-size: 15px; font-weight: 650; }
+.pv h5 { margin: 14px 0 6px; font-size: 14px; font-weight: 650; color: var(--teal); }
+.pv-text { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 72ch; }
+.pv-table { font-size: 14px; min-width: 480px; background: var(--sheet); }
+.pv-table th { background: var(--slate-soft); color: var(--ink); }
+.pv-table td { padding: 8px 10px; }
+.pv-table tfoot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.pv-doc { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 18px; }
+.pv-doc ol { margin: 0; padding-left: 20px; font-size: 14.5px; }
+.pv-doc li { margin: 4px 0; }
+.pv-doc p { margin: 0; font-size: 14.5px; }
+.pv-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px 16px; margin: 0 0 4px; font-size: 14px; }
+.pv-meta dt { color: var(--muted); font-size: 12.5px; }
+.pv-meta dd { margin: 0; }
+.pv-flow { display: block; width: 100%; min-width: 520px; height: auto; }
+.pv-link { fill: none; stroke: var(--teal); opacity: .45; }
+.pv-node { fill: var(--sheet); stroke: var(--rule); stroke-width: 1.2; }
+.pv-node.person { fill: var(--teal-soft); stroke: var(--teal); }
+.pv-node-text { fill: var(--ink); font-size: 12.5px; }
+.pv-node-text.strong { font-weight: 650; }
+
+.mx-key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; color: var(--muted); margin-bottom: 10px; }
+.mx { display: inline-block; min-width: 26px; text-align: center; padding: 1px 6px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+.mx-0 { background: var(--teal); color: var(--on-teal); }
+.mx-1 { background: var(--warn-bg); color: var(--warn); }
+.mx-2 { background: var(--slate-soft); color: var(--muted); }
+.pv-matrix td:not(:first-child), .pv-matrix th:not(:first-child) { text-align: center; }
+
+.seats { display: grid; gap: 14px; justify-items: center; }
+.seat-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; position: relative; }
+.seat-row + .seat-row::before { content: ""; position: absolute; top: -14px; left: 50%; height: 14px; border-left: 1.5px solid var(--rule); }
+.seat { font: inherit; text-align: center; min-width: 170px; max-width: 220px; padding: 10px 14px; cursor: pointer;
+  background: var(--sheet); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 10px; display: grid; gap: 2px; }
+.seat[aria-pressed="true"] { border-color: var(--teal); background: var(--teal-soft); }
+.seat-title { font-weight: 650; font-size: 14px; }
+.seat-person { color: var(--muted); font-size: 13px; }
+.seat-detail { margin-top: 14px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; }
+.seat-detail h5 { margin: 0 0 8px; color: var(--ink); font-size: 15px; }
+.seat-cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px 24px; }
+.seat-cols .hint { margin: 0 0 4px; }
+.seat-cols ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+@media (max-width: 560px) { .seat-cols { grid-template-columns: 1fr; } .seat { min-width: 140px; } }
+/* let wide tables scroll inside their own box instead of stretching the card */
+.asset-cards > li, .pv > *, .preview-inline, .seat-detail, .seat-cols > * { min-width: 0; }
+.pv-flow { max-width: 640px; margin: 0 auto; }
+.seat { align-content: center; }
