@@ -7,6 +7,10 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_PATHS = ["/login", "/auth", "/demo"];
 
 export async function proxy(request: NextRequest) {
+  // The demo uses only made-up data built into the code, so it skips the
+  // login check and works even before Supabase is configured.
+  if (request.nextUrl.pathname === "/demo") return NextResponse.next();
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
