@@ -3,7 +3,8 @@
 // `npm run seed-demo`, so a local database looks like the design reference.
 // Dates are days after the cycle start, so the demo never goes stale.
 
-export const DEMO_TODAY_DAY = 44;
+/** The demo sits in week 7: the cycle starts on the Monday on or before this many days ago (plus one). */
+export const DEMO_TODAY_DAY = 43;
 
 export const demoReadings: Record<string, number[]> = {
   "Owner hours a week": [58, 57, 55, 52, 50, 47],

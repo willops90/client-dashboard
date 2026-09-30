@@ -1,5 +1,5 @@
 import Markdown from "react-markdown";
-import { actionStatus, inFortnight } from "@/lib/leap";
+import { actionStatus, formatDate, inFortnight } from "@/lib/leap";
 import { dueLabel, formatMeetingTime, tzAbbrev } from "@/lib/format";
 import type { Action, DashboardData } from "@/lib/types";
 import { ActionTick } from "@/components/dashboard/ActionTick";
@@ -83,7 +83,13 @@ export function ThisWeek({ data }: { data: DashboardData }) {
           )}
           {u && (
             <div className="v2-update">
-              <p className="v2-kicker">{u.kind === "recap" ? "Meeting recap" : "Monday update"}</p>
+              <p className="v2-kicker">
+                {u.kind === "recap" ? `Meeting recap from ${data.advisorName}` : `Weekly update from ${data.advisorName}`}
+              </p>
+              <p className="v2-sent">
+                Sent {formatDate(u.sent_on, { weekday: "long", day: "numeric", month: "long" })}
+                {u.kind === "recap" ? ", after our last meeting" : ""}
+              </p>
               <div className="md">
                 <Markdown>{firstPara}</Markdown>
               </div>

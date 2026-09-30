@@ -130,3 +130,19 @@ describe("Northside LEAP plan alignment", () => {
     expect(parsePlan(p).ok).toBe(false);
   });
 });
+
+import { buildDemoDashboard } from "./demo";
+import { weekdayOf } from "./leap";
+
+describe("demo dates", () => {
+  it("always starts on a Monday, sits in week 7, and sends Monday updates on Mondays", () => {
+    for (let i = 0; i < 14; i++) {
+      const now = new Date(Date.UTC(2026, 8, 20 + i, 2));
+      const d = buildDemoDashboard(now);
+      expect(weekdayOf(d.cycle.start_date), d.cycle.start_date).toBe(1);
+      expect(d.currentWeek).toBe(7);
+      expect(weekdayOf(d.latestUpdate!.sent_on)).toBe(1);
+      expect(d.latestUpdate!.sent_on <= d.today).toBe(true);
+    }
+  });
+});

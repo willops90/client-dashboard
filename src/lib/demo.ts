@@ -3,7 +3,7 @@
 // The cycle is placed so today is always day 44, whatever the date.
 
 import northside from "../../plans/northside-cycle-1.json";
-import { addDays, cycleClock, todayIn, zonedTimeToUtc } from "./leap";
+import { addDays, cycleClock, todayIn, weekdayOf, zonedTimeToUtc } from "./leap";
 import { parsePlan } from "./plan";
 import {
   DEMO_TODAY_DAY,
@@ -23,7 +23,10 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
   if (!parsed.ok) throw new Error(`Northside plan is invalid: ${parsed.errors.join("; ")}`);
   const plan = parsed.plan;
   const tz = plan.client.timezone;
-  const start = addDays(todayIn(tz, now), -(DEMO_TODAY_DAY - 1));
+  // Start on a Monday so Monday updates land on Mondays, placed so today is
+  // always in week 7 (day 43–49) and the made-up history stays consistent.
+  const around = addDays(todayIn(tz, now), -(DEMO_TODAY_DAY - 1));
+  const start = addDays(around, -((weekdayOf(around) + 6) % 7));
   const at = (offset: number) => addDays(start, offset);
   const origStart = plan.cycle.start_date;
   const shift = (date: string) => at(Math.round((Date.parse(date) - Date.parse(origStart)) / 86_400_000));
