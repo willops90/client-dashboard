@@ -1,5 +1,5 @@
 import Markdown from "react-markdown";
-import { BUILD_PHASE_END_DAY, CYCLE_DAYS, formatValue, kpiStatus, latestReading } from "@/lib/leap";
+import { BUILD_PHASE_END_DAY, CYCLE_DAYS, formatDate, formatValue, kpiStatus, latestReading } from "@/lib/leap";
 import { formatMeetingTime, tzAbbrev } from "@/lib/format";
 import { MONTH_STATUS, type DashboardData } from "@/lib/types";
 import { PILLARS, type PillarKey } from "./Pillar";
@@ -8,7 +8,7 @@ export function currentPillar(day: number): PillarKey {
   return day < 1 ? "E" : day <= BUILD_PHASE_END_DAY ? "A" : "P";
 }
 
-/** LEAP at a glance: where we are in the 90 days, one line per pillar, and the next meeting. */
+/** This LEAP cycle at a glance: the cycle dates, where we are in the 90 days, one line per pillar, and the next meeting. */
 export function Glance({ data }: { data: DashboardData }) {
   const { cycle, day, months, assets, kpis, nextMeeting: m, client } = data;
   const now = currentPillar(day);
@@ -44,7 +44,12 @@ export function Glance({ data }: { data: DashboardData }) {
   return (
     <section className="v2-glance" aria-labelledby="h-glance">
       <div className="v2-glance-head">
-        <h2 id="h-glance">This LEAP cycle at a glance</h2>
+        <h2 id="h-glance">
+          This LEAP cycle at a glance
+          <span className="v2-glance-dates">
+            {formatDate(cycle.start_date, { day: "numeric", month: "short" })} – {formatDate(cycle.end_date, { day: "numeric", month: "short", year: "numeric" })}
+          </span>
+        </h2>
         {inCycle && (
           <span className="hint">
             Day {day} of {CYCLE_DAYS}
