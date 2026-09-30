@@ -1,6 +1,7 @@
 import { DRAG_LABELS, type DashboardData } from "@/lib/types";
 import { CYCLE_DAYS, formatDate } from "@/lib/leap";
 import { ExitStrip } from "@/components/dashboard/ExitStrip";
+import { OwnerOptionalLogo } from "@/components/brand/OwnerOptionalLogo";
 import { buildBreakdown } from "@/components/dashboard/PlanSections";
 import { KpiTiles } from "./KpiTiles";
 import { Journey, Stage } from "./Journey";
@@ -18,14 +19,19 @@ export function DashboardV2({ data }: { data: DashboardData }) {
   const inCycle = day >= 1 && day <= CYCLE_DAYS;
   return (
     <div className="wrap v2">
-      <ExitStrip data={data} />
-      <header className="top">
-        <div className="brand">Owner Optional Advisory</div>
-        <p>
-          {client.name}
+      <header className="v2-brandbar">
+        <OwnerOptionalLogo />
+        <div className="v2-client">
+          {client.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={client.logo_url} alt={client.name} className="v2-client-logo" />
+          ) : (
+            <span className="v2-client-name">{client.name}</span>
+          )}
           {viewer.kind === "demo" && <span className="badge">Demo, made-up data</span>}
-        </p>
+        </div>
       </header>
+      <ExitStrip data={data} variant="bar" />
 
       <Journey day={day} />
 

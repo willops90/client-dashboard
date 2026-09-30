@@ -4,6 +4,7 @@
     "slug": "northside",
     "industry": "HVAC",
     "timezone": "Australia/Brisbane",
+    "logo": "/demo/northside-logo.svg",
     "exit": {
       "goal": "Sale-ready by mid-2028",
       "cycles": 6,

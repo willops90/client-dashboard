@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 40" role="img" aria-label="Northside Climate Co.">
+  <!-- Made-up logo for the demo client -->
+  <g fill="none" stroke="#2F6F9F" stroke-width="2.6" stroke-linecap="round">
+    <path d="M20 5v30M7 12.5l26 15M7 27.5l26-15"/>
+    <path d="M16 7l4 3 4-3M16 33l4-3 4 3"/>
+  </g>
+  <text x="44" y="19" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="1.2" fill="#1F4E73">NORTHSIDE</text>
+  <text x="44" y="33" font-family="Arial, Helvetica, sans-serif" font-size="10.5" letter-spacing="2.4" fill="#5B7F9C">CLIMATE CO.</text>
+</svg>

@@ -91,6 +91,11 @@ export const planSchema = z
       industry: z.string().optional(),
       timezone: z.string().refine(validTimeZone, "must be an IANA timezone such as Australia/Sydney"),
       status: z.enum(["active", "paused", "offboarded"]).optional(),
+      logo: z
+        .string()
+        .regex(/^(https:\/\/|\/)\S+$/, "use an https:// link or a path starting with /")
+        .optional()
+        .describe("the client's logo, shown at the top of their dashboard"),
       exit: z
         .object({
           goal: text.describe('e.g. "Sale-ready by mid-2028"'),

@@ -536,3 +536,35 @@ details.v2-more > .wb { margin-top: 12px; }
 .v2-focus-chip { display: inline-block !important; margin-left: 8px; padding: 0 7px; border-radius: 999px; background: var(--teal-soft); color: var(--teal) !important; font-weight: 600; font-size: 11.5px !important; }
 .v2-parked { padding-top: 18px !important; }
 .v2-parked .parked { margin-top: 10px; }
+
+/* v2 brand bar: Owner Optional on the left, the client on the right */
+.v2-brandbar { display: flex; justify-content: space-between; align-items: center; gap: 12px 20px; flex-wrap: wrap;
+  padding: 18px 0 14px; border-bottom: 1px solid var(--rule); }
+.oo-logo { display: inline-flex; align-items: center; gap: 11px; }
+.oo-mark { width: 40px; height: 29px; flex: none; }
+.oo-ring-a { stroke: var(--brand-ring-a); }
+.oo-ring-b { stroke: var(--brand-ring-b); }
+.oo-text { display: grid; justify-items: center; }
+.oo-name { font-family: var(--font-brand), Georgia, serif; font-weight: 600; font-size: 21px; line-height: 1; color: var(--brand-ink); white-space: nowrap; }
+.oo-name i { color: var(--brand-accent); }
+.oo-tag { margin-top: 5px; font-size: 9px; font-weight: 600; letter-spacing: 2.6px; text-transform: uppercase; color: var(--muted); line-height: 1; }
+.v2-client { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.v2-client-logo { display: block; height: 36px; width: auto; max-width: 200px; }
+.v2-client-name { font-weight: 700; font-size: 16px; }
+.v2-client .badge { margin: 0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .v2-client-logo { background: #F8FAF9; border-radius: 6px; padding: 4px 8px; height: 44px; } }
+:root[data-theme="dark"] .v2-client-logo { background: #F8FAF9; border-radius: 6px; padding: 4px 8px; height: 44px; }
+@media (max-width: 400px) { .oo-name { font-size: 18px; } .oo-mark { width: 34px; } .v2-client-logo { height: 30px; max-width: 150px; } }
+
+/* cycles bar */
+.cycles-bar { margin-top: 14px; }
+.cycles-bar summary { display: grid; gap: 8px; padding: 10px 14px 12px; }
+.cb-line { display: flex; align-items: center; gap: 8px; }
+.cb-track { display: flex; gap: 3px; }
+.cb-seg { flex: 1; min-width: 0; height: 24px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  background: var(--slate-soft); color: var(--muted); white-space: nowrap; overflow: hidden; }
+.cb-seg.done { background: var(--teal-soft); color: var(--teal); }
+.cb-seg.now { flex: 2.2; background: var(--brand-ring-a); color: #1B1406; }
+.cb-seg.next { background: var(--slate-soft); color: var(--ink); }
+.cb-caption { font-size: 13px; color: var(--muted); }
+.v2 .v2-journey { margin-top: 6px; }

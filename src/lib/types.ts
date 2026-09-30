@@ -10,6 +10,7 @@ export type Client = {
   timezone: string;
   industry: string | null;
   status: string;
+  logo_url: string | null;
   exit_goal: string | null;
   exit_cycles_estimate: number | null;
   exit_roadmap: ExitRoadmapItem[] | null;

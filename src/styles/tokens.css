@@ -6,6 +6,8 @@
   --teal: #0E6B66; --teal-soft: #D3E6E3; --slate-soft: #E1E6EA; --on-teal: #FFFFFF;
   --good: #2C8A4B; --warn: #B87A0B; --bad: #BE3B28;
   --good-bg: #E0F0E5; --warn-bg: #F7EBD2; --bad-bg: #F6DEDA;
+  /* Owner Optional logo, from the marketing site's palette */
+  --brand-ink: #123027; --brand-accent: #4E7D66; --brand-ring-a: #BE8F42; --brand-ring-b: #6E9A84;
   color-scheme: light dark;
 }
 
@@ -15,6 +17,7 @@
     --teal: #4FB8AF; --teal-soft: #16332F; --slate-soft: #1E2A31; --on-teal: #0B1A18;
     --good: #5BC27D; --warn: #E0A83A; --bad: #EE7560;
     --good-bg: #15301F; --warn-bg: #33280F; --bad-bg: #3A1C17;
+    --brand-ink: #ECEDE5; --brand-accent: #A6C1B1; --brand-ring-a: #D2A85E; --brand-ring-b: #A6C1B1;
   }
 }
 
@@ -23,4 +26,5 @@
   --teal: #4FB8AF; --teal-soft: #16332F; --slate-soft: #1E2A31; --on-teal: #0B1A18;
   --good: #5BC27D; --warn: #E0A83A; --bad: #EE7560;
   --good-bg: #15301F; --warn-bg: #33280F; --bad-bg: #3A1C17;
+  --brand-ink: #ECEDE5; --brand-accent: #A6C1B1; --brand-ring-a: #D2A85E; --brand-ring-b: #A6C1B1;
 }

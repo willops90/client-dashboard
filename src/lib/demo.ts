@@ -88,6 +88,7 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
     timezone: tz,
     industry: plan.client.industry ?? null,
     status: "active",
+    logo_url: plan.client.logo ?? null,
     exit_goal: plan.client.exit?.goal ?? null,
     exit_cycles_estimate: plan.client.exit?.cycles ?? null,
     exit_roadmap: plan.client.exit?.roadmap ?? null,

@@ -89,6 +89,7 @@ async function loadClient(db: Db, plan: Plan, log: string[]): Promise<string> {
           slug,
           industry: industry ?? null,
           timezone,
+          logo_url: plan.client.logo ?? null,
           exit_goal: exit?.goal ?? null,
           exit_cycles_estimate: exit?.cycles ?? null,
           exit_roadmap: exit?.roadmap ?? null,
