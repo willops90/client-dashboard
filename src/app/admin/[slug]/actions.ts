@@ -77,7 +77,10 @@ export async function postUpdate(_prev: FormState, form: FormData): Promise<Form
   const sentOn = str(form, "sent_on");
   if (!body) return { error: "Write the update first." };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(sentOn)) return { error: "Pick the date it was sent." };
-  const { error } = await ctx.supabase.from("updates").insert({ cycle_id: str(form, "cycle_id"), kind, sent_on: sentOn, body });
+  const summary = str(form, "summary");
+  const { error } = await ctx.supabase
+    .from("updates")
+    .insert({ cycle_id: str(form, "cycle_id"), kind, sent_on: sentOn, body, summary: summary || null });
   return error ? { error: error.message } : done(str(form, "slug"), kind === "monday" ? "Monday update posted." : "Recap posted.");
 }
 

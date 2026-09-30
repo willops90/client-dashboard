@@ -26,6 +26,7 @@ export type Cycle = {
   milestones: Milestone[] | null;
   goal_note: string | null;
   goal_why: string | null;
+  anchor_quote: string | null;
   status: string;
 };
 
@@ -105,7 +106,7 @@ export type Score = { id: string; drag: Drag; score: number; target: number | nu
 
 export type Parked = { id: string; text: string; category: string | null; planned_cycle: number | null };
 
-export type Update = { id: string; kind: "monday" | "recap"; sent_on: string; body: string };
+export type Update = { id: string; kind: "monday" | "recap"; sent_on: string; body: string; summary: string | null };
 
 export type Meeting = { id: string; starts_at: string; duration_min: number; agenda: string | null; link: string | null };
 
@@ -141,7 +142,11 @@ export type DashboardData = {
   assets: Asset[];
   scorecard: Score[];
   parked: Parked[];
+  /** The latest Monday email. */
   latestUpdate: Update | null;
+  /** The latest meeting recap, and the meeting it followed. */
+  lastRecap: Update | null;
+  lastMeeting: Meeting | null;
   nextMeeting: Meeting | null;
   checkins: Checkin[];
   // Derived from the client's clock

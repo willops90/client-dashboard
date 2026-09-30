@@ -11,14 +11,17 @@ import {
   demoCheckinWeeks,
   demoDoneActions,
   demoExtraAdvisorAction,
+  demoLastMeeting,
   demoMeeting,
+  demoRecap,
   demoMonthStatus,
   demoReadings,
   demoUpdate,
 } from "./demo-activity";
 import type { Action, DashboardData, Member, WeekStatus } from "./types";
 
-export function buildDemoDashboard(now = new Date()): DashboardData {
+/** `atDay` previews the demo on another day of the cycle (1–90), e.g. the review phase. */
+export function buildDemoDashboard(now = new Date(), atDay?: number): DashboardData {
   const parsed = parsePlan(northside);
   if (!parsed.ok) throw new Error(`Northside plan is invalid: ${parsed.errors.join("; ")}`);
   const plan = parsed.plan;
@@ -26,7 +29,10 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
   // Start on a Monday so Monday updates land on Mondays, placed so today is
   // always in week 7 (day 43–49) and the made-up history stays consistent.
   const around = addDays(todayIn(tz, now), -(DEMO_TODAY_DAY - 1));
-  const start = addDays(around, -((weekdayOf(around) + 6) % 7));
+  const start =
+    atDay && atDay >= 1 && atDay <= 90
+      ? addDays(todayIn(tz, now), -(Math.round(atDay) - 1))
+      : addDays(around, -((weekdayOf(around) + 6) % 7));
   const at = (offset: number) => addDays(start, offset);
   const origStart = plan.cycle.start_date;
   const shift = (date: string) => at(Math.round((Date.parse(date) - Date.parse(origStart)) / 86_400_000));
@@ -82,6 +88,7 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
     goal_note: plan.cycle.goal_note ?? null,
     milestones: plan.cycle.milestones ?? null,
     goal_why: plan.cycle.goal_why ?? null,
+    anchor_quote: plan.cycle.anchor_quote ?? null,
     status: "active",
   };
   const client = {
@@ -157,7 +164,15 @@ export function buildDemoDashboard(now = new Date()): DashboardData {
       note: s.note ?? null,
     })),
     parked: (plan.parked ?? []).map((p, i) => ({ id: `pk${i}`, text: p.text, category: p.category ?? null, planned_cycle: p.cycle ?? null })),
-    latestUpdate: { id: "u1", kind: "monday", sent_on: at(demoUpdate.offset), body: demoUpdate.body },
+    latestUpdate: { id: "u1", kind: "monday", sent_on: at(demoUpdate.offset), body: demoUpdate.body, summary: null },
+    lastRecap: { id: "u0", kind: "recap", sent_on: at(demoRecap.offset), body: demoRecap.body, summary: demoRecap.summary },
+    lastMeeting: {
+      id: "mt0",
+      starts_at: zonedTimeToUtc(`${at(demoLastMeeting.offset)}T${demoLastMeeting.time}`, tz).toISOString(),
+      duration_min: demoLastMeeting.duration_min,
+      agenda: null,
+      link: null,
+    },
     nextMeeting: {
       id: "mt1",
       starts_at: zonedTimeToUtc(`${at(demoMeeting.offset)}T${demoMeeting.time}`, tz).toISOString(),

@@ -38,6 +38,18 @@ The pricing matrix is the one thing holding up quoting. If Dave can sign it off 
 Your actions and mine are on the dashboard. Shout if anything's unclear before Thursday.`,
 };
 
+/** The last meeting (Thursday of week 5) and the recap sent the next day. */
+export const demoLastMeeting = { offset: 31, time: "09:00", duration_min: 60 };
+export const demoRecap = {
+  offset: 32,
+  summary: "Priya quotes jobs up to $15k as soon as Dave signs off the pricing matrix; Sean moves every October job into ServiceM8.",
+  body: `Thanks all. What we agreed on Thursday:
+
+- **Quoting:** once Dave signs off pricing matrix v1, Priya quotes every job up to $15k without him. Over $15k still goes to Dave for approval.
+- **Scheduling:** Sean moves every October job into ServiceM8 by the end of September.
+- **Next meeting:** quoting review and a first look at decision rights.`,
+};
+
 export const demoMeeting = {
   offset: 45, // Thursday of week 7
   time: "09:00",

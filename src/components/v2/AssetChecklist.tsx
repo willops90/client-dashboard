@@ -1,7 +1,7 @@
 import { ASSET_STATUS, type DashboardData } from "@/lib/types";
 import { AssetPreviewControl } from "@/components/dashboard/AssetCard";
 import { StatusSelect } from "@/components/advisor/StatusSelect";
-import { Stage } from "./Journey";
+import { PillarHead } from "./Pillar";
 
 /** Assets as a checklist: one line each, the detail inside the preview. */
 export function AssetChecklist({ data }: { data: DashboardData }) {
@@ -11,9 +11,7 @@ export function AssetChecklist({ data }: { data: DashboardData }) {
   const shortName = client.name.replace(/\s+(Co\.?|Pty\.? Ltd\.?|Ltd\.?|Inc\.?)$/i, "");
   return (
     <section className="block" aria-labelledby="h-assets">
-      <h2 id="h-assets">
-        Assets <Stage k="A" />
-      </h2>
+      <PillarHead k="A" />
       <p className="lede">These stay with {shortName} after the cycle. You own them.</p>
       <div className="v2-progress" role="img" aria-label={`${done} of ${assets.length} assets done`}>
         <b>

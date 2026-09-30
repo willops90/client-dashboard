@@ -13,7 +13,9 @@ import {
   demoCheckinWeeks,
   demoDoneActions,
   demoExtraAdvisorAction,
+  demoLastMeeting,
   demoMeeting,
+  demoRecap,
   demoMonthStatus,
   demoReadings,
   demoUpdate,
@@ -116,6 +118,20 @@ async function main() {
 
   ok(await db.from("updates").delete().eq("cycle_id", cycle.id).eq("sent_on", at(demoUpdate.offset)), "Clearing update");
   ok(await db.from("updates").insert({ cycle_id: cycle.id, kind: "monday", sent_on: at(demoUpdate.offset), body: demoUpdate.body }), "Saving update");
+
+  ok(await db.from("updates").delete().eq("cycle_id", cycle.id).eq("sent_on", at(demoRecap.offset)), "Clearing recap");
+  ok(
+    await db
+      .from("updates")
+      .insert({ cycle_id: cycle.id, kind: "recap", sent_on: at(demoRecap.offset), body: demoRecap.body, summary: demoRecap.summary }),
+    "Saving recap",
+  );
+  const lastStartsAt = zonedTimeToUtc(`${at(demoLastMeeting.offset)}T${demoLastMeeting.time}`, tz).toISOString();
+  ok(await db.from("meetings").delete().eq("cycle_id", cycle.id).eq("starts_at", lastStartsAt), "Clearing last meeting");
+  ok(
+    await db.from("meetings").insert({ cycle_id: cycle.id, starts_at: lastStartsAt, duration_min: demoLastMeeting.duration_min }),
+    "Saving last meeting",
+  );
 
   const startsAt = zonedTimeToUtc(`${at(demoMeeting.offset)}T${demoMeeting.time}`, tz).toISOString();
   ok(await db.from("meetings").delete().eq("cycle_id", cycle.id).eq("starts_at", startsAt), "Clearing meeting");

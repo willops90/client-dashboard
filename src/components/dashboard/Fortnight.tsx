@@ -66,6 +66,12 @@ export function Fortnight({ data }: { data: DashboardData }) {
                 </div>
                 <label className="field">
                   <span>
+                    One-line summary <small>(recaps: what we decided, shown at the top of the dashboard)</small>
+                  </span>
+                  <input type="text" name="summary" maxLength={200} />
+                </label>
+                <label className="field">
+                  <span>
                     Body <small>(Markdown)</small>
                   </span>
                   <textarea name="body" rows={6} required />

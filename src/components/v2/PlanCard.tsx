@@ -1,6 +1,8 @@
 import { formatDate, monthRange } from "@/lib/leap";
 import { MONTH_STATUS, type DashboardData } from "@/lib/types";
-import { Stage } from "./Journey";
+import { buildBreakdown } from "@/components/dashboard/PlanSections";
+import { PillarHead } from "./Pillar";
+import { WeekStrip } from "./WeekStrip";
 
 /** How the goal gets met: one-line opportunity → initiative pairs that expand, and a three-month strip. The goal itself is at the top of the page. */
 export function PlanCard({ data }: { data: DashboardData }) {
@@ -8,9 +10,7 @@ export function PlanCard({ data }: { data: DashboardData }) {
   const currentMonth = day >= 1 && day <= 90 ? Math.min(3, Math.floor((day - 1) / 30) + 1) : 0;
   return (
     <section className="block" aria-labelledby="h-plan">
-      <h2 id="h-plan">
-        How we&apos;ll get there <Stage k="E" />
-      </h2>
+      <PillarHead k="E" />
 
       {planPairs.length > 0 && (
         <div className="v2-pairs">
@@ -73,6 +73,11 @@ export function PlanCard({ data }: { data: DashboardData }) {
           })}
         </ol>
       )}
+
+      <div className="v2-timeline">
+        <p className="v2-kicker">Timeline: 13 weeks</p>
+        <WeekStrip months={buildBreakdown(data)} slug={data.client.slug} advisor={data.viewer.kind === "advisor"} />
+      </div>
     </section>
   );
 }

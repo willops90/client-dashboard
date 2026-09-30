@@ -1,22 +1,24 @@
-import { DRAG_LABELS, type DashboardData } from "@/lib/types";
-import { CYCLE_DAYS, formatDate } from "@/lib/leap";
+import type { DashboardData } from "@/lib/types";
 import { ExitStrip } from "@/components/dashboard/ExitStrip";
 import { OwnerOptionalLogo } from "@/components/brand/OwnerOptionalLogo";
-import { buildBreakdown } from "@/components/dashboard/PlanSections";
-import { KpiTiles } from "./KpiTiles";
-import { Journey, Stage } from "./Journey";
+import { Glance, currentPillar } from "./Glance";
 import { ThisWeek } from "./ThisWeek";
+import { FocusSection } from "./FocusSection";
 import { PlanCard } from "./PlanCard";
 import { AssetChecklist } from "./AssetChecklist";
-import { WeekStrip } from "./WeekStrip";
+import { ProgressSection } from "./ProgressSection";
 
 /**
- * The simplified layout: answers "are we on track?", "what's next?" and
- * "where is this going?" in that order, with detail one tap away.
+ * Structured around the four LEAP pillars, the same frame every meeting uses
+ * (open the plan, assess the KPIs, close the gaps, confirm next steps):
+ * a glance at all four, a quick view of this week, then L · E · A · P.
+ * From day 60 the Progress section moves up for the review phase.
  */
 export function DashboardV2({ data }: { data: DashboardData }) {
-  const { client, cycle, day, viewer } = data;
-  const inCycle = day >= 1 && day <= CYCLE_DAYS;
+  const { client, viewer, day } = data;
+  const reviewPhase = currentPillar(day) === "P" && day <= 90;
+  const progress = <ProgressSection data={data} reviewPhase={reviewPhase} />;
+
   return (
     <div className="wrap v2">
       <header className="v2-brandbar">
@@ -32,81 +34,17 @@ export function DashboardV2({ data }: { data: DashboardData }) {
         </div>
       </header>
       <ExitStrip data={data} variant="bar" />
+      {client.exit_goal && <p className="v2-bridge">This 90-day cycle is how we get there.</p>}
 
-      <Journey day={day} />
-
-      <section className="v2-hero" aria-labelledby="headline">
-        <p className="eyebrow">
-          This cycle&apos;s goal <Stage k="P" />
-        </p>
-        <h1 id="headline" className="v2-h1">
-          {cycle.goal_short ?? cycle.goal_title}
-        </h1>
-        {cycle.goal_why && <p className="v2-why">{cycle.goal_why}</p>}
-        <p className="cycle">
-          {formatDate(cycle.start_date)} to {formatDate(cycle.end_date)}
-          {inCycle ? ` · day ${day} of ${CYCLE_DAYS}` : ""}
-        </p>
-        <KpiTiles kpis={data.kpis} milestones={cycle.milestones ?? []} day={day} endDate={cycle.end_date} goalNote={cycle.goal_note} />
-      </section>
-
+      <h1 className="sr-only">{client.name} progress dashboard</h1>
+      <Glance data={data} />
       <ThisWeek data={data} />
+
+      {reviewPhase && progress}
+      <FocusSection data={data} />
       <PlanCard data={data} />
       <AssetChecklist data={data} />
-
-      <section className="block" aria-labelledby="h-weeks">
-        <h2 id="h-weeks">
-          Weekly breakdown <Stage k="A" />
-        </h2>
-        <WeekStrip months={buildBreakdown(data)} slug={client.slug} advisor={viewer.kind === "advisor"} />
-      </section>
-
-      {data.scorecard.length > 0 && (
-        <section className="block" aria-labelledby="h-score">
-          <h2 id="h-score">
-            Sale-readiness scorecard <Stage k="P" />
-          </h2>
-          <p className="lede">How a buyer would score the business today, out of 10. Re-scored on day 90.</p>
-          <div className="score">
-            {data.scorecard.map((s) => {
-              const name = DRAG_LABELS[s.drag];
-              const showTarget = s.in_focus && s.target;
-              return (
-                <div key={s.id} className="score-row">
-                  <div className="lbl">
-                    {name}
-                    {s.in_focus && <small className="v2-focus-chip">In focus</small>}
-                  </div>
-                  <div className="bar" role="img" aria-label={`${name}: ${s.score} out of 10${showTarget ? `, target ${s.target}` : ""}`}>
-                    <div className={`fill${s.in_focus ? " on" : ""}`} style={{ width: `${s.score * 10}%` }} />
-                    {showTarget && <div className="tgt" style={{ left: `calc(${s.target! * 10}% - 1px)` }} />}
-                  </div>
-                  <div className="num">
-                    <b>{s.score}</b>/10{showTarget && ` → ${s.target}`}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      {data.parked.length > 0 && (
-        <section className="block v2-parked" aria-label="Parked for later">
-          <details className="v2-more">
-            <summary>
-              {data.parked.length} idea{data.parked.length === 1 ? "" : "s"} parked for a future cycle
-            </summary>
-            <ol className="parked">
-              {data.parked.map((p) => (
-                <li key={p.id}>
-                  {p.text} {p.planned_cycle && <span className="tag teal">Cycle {p.planned_cycle}</span>}
-                </li>
-              ))}
-            </ol>
-          </details>
-        </section>
-      )}
+      {!reviewPhase && progress}
 
       <footer>
         {viewer.kind === "demo" && `${client.name}, its people and every number on this page are made up. `}

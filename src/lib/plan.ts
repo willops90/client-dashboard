@@ -128,6 +128,7 @@ export const planSchema = z
       goal_short: z.string().optional().describe("the goal in a few words, shown above the chart"),
       goal_note: z.string().optional().describe("one line of context under the chart"),
       goal_why: z.string().optional(),
+      anchor_quote: z.string().optional().describe("the client's own words from the sales call, shown as 'As you put it: …'"),
       status: z.enum(["planned", "active", "review", "closed"]).optional(),
       milestones: z
         .array(

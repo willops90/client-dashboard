@@ -146,3 +146,17 @@ describe("demo dates", () => {
     }
   });
 });
+
+describe("demo LEAP structure data", () => {
+  it("has an anchor quote, a recap with a one-line summary, and the meeting it followed", () => {
+    const d = buildDemoDashboard(new Date(Date.UTC(2026, 8, 30, 2)));
+    expect(d.cycle.anchor_quote).toBeTruthy();
+    expect(d.lastRecap?.summary).toBeTruthy();
+    expect(d.lastMeeting && d.lastMeeting.starts_at < new Date(Date.UTC(2026, 8, 30, 2)).toISOString()).toBe(true);
+    expect(d.latestUpdate?.kind).toBe("monday");
+  });
+
+  it("can preview a later day, e.g. the review phase", () => {
+    expect(buildDemoDashboard(new Date(Date.UTC(2026, 8, 30, 2)), 65).day).toBe(65);
+  });
+});

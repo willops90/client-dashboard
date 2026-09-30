@@ -74,7 +74,12 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
         .eq("client_id", client.id)
         .is("picked_up_in_cycle_id", null)
         .order("created_at"),
-      supabase.from("updates").select("id, kind, sent_on, body").eq("cycle_id", cycle.id).order("sent_on", { ascending: false }).limit(1),
+      supabase
+        .from("updates")
+        .select("id, kind, sent_on, body, summary")
+        .eq("cycle_id", cycle.id)
+        .order("sent_on", { ascending: false })
+        .limit(20),
       supabase
         .from("meetings")
         .select("id, starts_at, duration_min, agenda, link")
@@ -85,6 +90,13 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
       supabase.from("checkins").select("*").eq("cycle_id", cycle.id).order("week_number"),
       supabase.from("advisors").select("display_name").order("created_at").limit(1),
     ]);
+  const { data: pastMeetings } = await supabase
+    .from("meetings")
+    .select("id, starts_at, duration_min, agenda, link")
+    .eq("cycle_id", cycle.id)
+    .lt("starts_at", now.toISOString())
+    .order("starts_at", { ascending: false })
+    .limit(1);
 
   const memberRows = (members.data ?? []) as Member[];
   const nameOf = (userId: string | null) => memberRows.find((m) => m.user_id === userId)?.display_name ?? null;
@@ -125,7 +137,9 @@ export async function loadDashboard(slug: string, viewer: SignedInViewer, now = 
     assets: assets.data ?? [],
     scorecard: scores.data ?? [],
     parked: parked.data ?? [],
-    latestUpdate: update.data?.[0] ?? null,
+    latestUpdate: update.data?.find((u) => u.kind === "monday") ?? update.data?.[0] ?? null,
+    lastRecap: update.data?.find((u) => u.kind === "recap") ?? null,
+    lastMeeting: pastMeetings?.[0] ?? null,
     nextMeeting: meeting.data?.[0] ?? null,
     checkins: checkinRows,
     ...cycleClock(client.timezone, cycle.start_date, checkinRows.map((c) => c.week_number), now),

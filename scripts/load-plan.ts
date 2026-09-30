@@ -162,6 +162,7 @@ async function loadCycle(db: Db, plan: Plan, clientId: string, log: string[]): P
           goal_note: c.goal_note ?? null,
           milestones: c.milestones ?? null,
           goal_why: c.goal_why ?? null,
+          anchor_quote: c.anchor_quote ?? null,
           ...(c.status ? { status: c.status } : {}),
         },
         { onConflict: "client_id,number" },
