@@ -686,3 +686,4 @@ details.v2-more > .wb { margin-top: 12px; }
 .c-value, .c-today-label { paint-order: stroke; stroke: var(--sheet); stroke-width: 5px; stroke-linejoin: round; }
 .v2 .v2-update .v2-kicker { margin-bottom: 2px; }
 .v2-sent { margin: 0 0 var(--s2, 8px); font-size: 13.5px; color: var(--muted); }
+.v2-why { margin: 0 0 var(--s3, 12px); max-width: 60ch; font-size: 16.5px; line-height: 1.5; color: var(--ink); }

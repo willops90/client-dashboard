@@ -42,6 +42,7 @@ export function DashboardV2({ data }: { data: DashboardData }) {
         <h1 id="headline" className="v2-h1">
           {cycle.goal_short ?? cycle.goal_title}
         </h1>
+        {cycle.goal_why && <p className="v2-why">{cycle.goal_why}</p>}
         <p className="cycle">
           {formatDate(cycle.start_date)} to {formatDate(cycle.end_date)}
           {inCycle ? ` · day ${day} of ${CYCLE_DAYS}` : ""}

@@ -2,19 +2,15 @@ import { formatDate, monthRange } from "@/lib/leap";
 import { MONTH_STATUS, type DashboardData } from "@/lib/types";
 import { Stage } from "./Journey";
 
-/** The plan on one card: the goal, three one-line pairs that expand, and a three-month strip. */
+/** How the goal gets met: one-line opportunity → initiative pairs that expand, and a three-month strip. The goal itself is at the top of the page. */
 export function PlanCard({ data }: { data: DashboardData }) {
   const { cycle, planPairs, months, day } = data;
   const currentMonth = day >= 1 && day <= 90 ? Math.min(3, Math.floor((day - 1) / 30) + 1) : 0;
   return (
     <section className="block" aria-labelledby="h-plan">
       <h2 id="h-plan">
-        The 90-day plan <Stage k="E" />
+        How we&apos;ll get there <Stage k="E" />
       </h2>
-      <div className="focus v2-focus">
-        <p className="k">The one goal</p>
-        <p className="v">{cycle.goal_title}</p>
-      </div>
 
       {planPairs.length > 0 && (
         <div className="v2-pairs">
