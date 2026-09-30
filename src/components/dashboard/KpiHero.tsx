@@ -216,9 +216,9 @@ export function Chart({ kpi, day }: { kpi: Kpi; day: number }) {
           <text
             className="c-value"
             fontSize={fs + 2}
-            x={x(last[0]) - 8}
-            y={y(last[1]) + (kpi.lower_is_better ? -12 : 20)}
-            textAnchor="end"
+            x={x(last[0]) + 10}
+            y={y(last[1]) + (kpi.lower_is_better ? -14 : 22)}
+            textAnchor="start"
           >
             {formatValue(last[1], kpi.unit)}
           </text>

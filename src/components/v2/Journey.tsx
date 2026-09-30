@@ -34,7 +34,10 @@ export function Journey({ day }: { day: number }) {
       <ol className="v2-journey-labels">
         {STAGES.map((s) => (
           <li key={s.key} className={s.key === current ? "now" : undefined} style={{ width: `${widths[s.key]}%` }}>
-            <b>{s.name}</b>
+            <b>
+              <span className="v2-long">{s.name}</span>
+              <span className="v2-short">{s.name.split(" ")[0]}</span>
+            </b>
             <span>{done(s.key) ? "Done" : s.when}</span>
           </li>
         ))}

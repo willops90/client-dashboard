@@ -20,17 +20,18 @@ export function PlanCard({ data }: { data: DashboardData }) {
         <div className="v2-pairs">
           <p className="v2-pairs-head" aria-hidden="true">
             <span>Growth opportunity</span>
-            <span />
             <span>Strategic initiative</span>
           </p>
           {planPairs.map((p) => (
             <details key={p.id} className="v2-pair">
               <summary>
                 <span className="v2-pair-p">{p.problem_short ?? p.problem}</span>
-                <span className="v2-arrow" aria-label="solved by">
-                  →
+                <span className="v2-pair-i">
+                  <span className="v2-arrow" aria-label="solved by">
+                    →
+                  </span>
+                  {p.initiative_short ?? p.initiative}
                 </span>
-                <span className="v2-pair-i">{p.initiative_short ?? p.initiative}</span>
               </summary>
               <div className="v2-pair-body">
                 <p>

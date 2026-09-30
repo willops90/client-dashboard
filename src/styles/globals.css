@@ -568,3 +568,119 @@ details.v2-more > .wb { margin-top: 12px; }
 .cb-seg.next { background: var(--slate-soft); color: var(--ink); }
 .cb-caption { font-size: 13px; color: var(--muted); }
 .v2 .v2-journey { margin-top: 6px; }
+
+/* ============ v2 spacing pass: one scale, 4 / 8 / 12 / 16 / 24 / 40 ============ */
+.v2 { --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 40px; }
+
+/* 1. brand bar: logos stay on one row; the demo label sits under them */
+.v2 .v2-brandbar { flex-wrap: nowrap; padding: var(--s5) 0 var(--s4); gap: var(--s4); }
+.v2 .v2-client { gap: var(--s2); flex-shrink: 1; min-width: 0; }
+.v2 .v2-client-logo { max-width: 100%; }
+@media (max-width: 520px) {
+  .v2 .oo-logo { gap: var(--s2); }
+  .v2 .oo-mark { width: 30px; height: 22px; }
+  .v2 .oo-name { font-size: 17px; }
+  .v2 .oo-tag { font-size: 8px; letter-spacing: 2.2px; margin-top: var(--s1); }
+  .v2 .v2-client-logo { height: auto; width: min(140px, 36vw); }
+  .v2 .v2-client .badge { font-size: 11px; padding: 1px 8px; }
+}
+@media (max-width: 360px) { .v2 .oo-name { font-size: 15px; } .v2 .oo-mark { width: 26px; } }
+
+/* 2. cycles bar and LEAP bar: room for the "Day 44" label, labels never cut */
+.v2 .cycles-bar { margin-top: var(--s5); }
+.v2 .cycles-bar summary { gap: var(--s3); padding: var(--s4) var(--s4) var(--s4); }
+.v2 .v2-journey { margin-top: var(--s5); padding-top: 26px; }
+.v2 .v2-journey-labels { margin-top: var(--s2); }
+.v2 .v2-journey-labels li { gap: 2px; }
+.v2 .v2-journey-labels li b { white-space: normal; }
+.v2 .v2-short { display: none; }
+@media (max-width: 420px) { .v2 .v2-long { display: none; } .v2 .v2-short { display: inline; } }
+
+/* hero */
+.v2 .v2-hero { padding-top: var(--s6); }
+.v2 .v2-hero .eyebrow { margin-bottom: var(--s2); }
+.v2 .v2-h1 { line-height: 1.12; margin-bottom: var(--s3); }
+.v2 .v2-hero .cycle { margin-bottom: var(--s5); }
+
+/* 3. KPI tiles */
+.v2 .v2-tiles { gap: var(--s3); margin-bottom: var(--s4); }
+.v2 .v2-tile { padding: var(--s4); gap: 0; }
+.v2 .v2-tile-name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); line-height: 1.35; }
+.v2 .v2-tile-name .badge { margin: 0; }
+.v2 .v2-tile-value { margin-top: var(--s3); }
+.v2 .v2-tile-target { margin: var(--s1) 0 var(--s3); }
+.v2 .v2-chart { padding: var(--s4) var(--s2) var(--s3); }
+.v2 .v2-chart-title { margin: 0 var(--s2) var(--s3); }
+.v2 .v2-chart .legend { margin: var(--s3) var(--s2) 0; }
+.v2 .v2-chart .why { margin: var(--s3) var(--s2) 0; line-height: 1.55; }
+
+/* sections: even rhythm between and within */
+.v2 section.block { margin-top: var(--s6); padding-top: var(--s6); }
+.v2 h2 { margin-bottom: var(--s3); }
+.v2 .lede { margin: 0 0 var(--s4); line-height: 1.55; }
+.v2 .v2-more > summary { padding: var(--s2) 0; }
+
+/* this week */
+.v2 .v2-week .actions li { padding: var(--s3) 0; gap: var(--s3); }
+.v2 .v2-week .actions .due { margin-top: 2px; }
+.v2 .v2-week .split { gap: var(--s5) var(--s6); }
+.v2 .v2-week-side { gap: var(--s5); }
+.v2 .v2-meeting { padding: var(--s4); }
+.v2 .v2-meeting-when { margin-bottom: var(--s3); line-height: 1.3; }
+.v2 .v2-update .md p { line-height: 1.55; }
+.v2 .v2-kicker { margin-bottom: var(--s2); }
+
+/* 5. plan card */
+.v2 .v2-focus { margin-bottom: var(--s5); padding: var(--s5); }
+.v2 .v2-focus .v { line-height: 1.25; margin-top: var(--s1); }
+.v2 .v2-pairs { gap: var(--s2); margin-bottom: var(--s5); }
+.v2 .v2-pairs-head { grid-template-columns: 1fr 1fr; gap: var(--s4); padding: 0 var(--s4); margin-bottom: 2px; }
+.v2 .v2-pair summary { grid-template-columns: 1fr 1fr; gap: var(--s1) var(--s4); padding: var(--s3) var(--s4); line-height: 1.4; }
+.v2 .v2-pair-i { display: flex; gap: var(--s2); }
+.v2 .v2-arrow { flex: none; }
+.v2 .v2-pair-body { padding: 0 var(--s4) var(--s4); gap: var(--s3) var(--s5); line-height: 1.5; }
+.v2 .v2-pair-body .hint { margin-bottom: 2px; }
+@media (max-width: 560px) {
+  .v2 .v2-pair summary { grid-template-columns: 1fr; }
+}
+.v2 .v2-months { gap: var(--s4) var(--s3); }
+.v2 .v2-month { padding-top: var(--s3); }
+.v2 .v2-month-head { margin-bottom: var(--s2); }
+.v2 .v2-month-goal { line-height: 1.45; margin-bottom: 0; }
+@media (max-width: 640px) { .v2 .v2-months { gap: var(--s5); } }
+
+/* 6. assets */
+.v2 .v2-progress { margin-bottom: var(--s3); }
+.v2 .v2-assets > li { padding: var(--s4) 0; gap: 2px var(--s3); }
+.v2 .v2-assets > li:last-child { border-bottom: 0; padding-bottom: 0; }
+.v2 .v2-asset-name { gap: 2px; line-height: 1.35; }
+@media (max-width: 560px) {
+  /* name and tag on the first line, subtitle and Preview on the second */
+  .v2 .v2-assets > li { grid-template-columns: 10px 1fr auto; align-items: center; }
+  .v2 .v2-asset-name { display: contents; }
+  .v2 .v2-dot { grid-row: 1; grid-column: 1; margin: 0; }
+  .v2 .v2-asset-name b { grid-row: 1; grid-column: 2; }
+  .v2 .v2-asset-name span { grid-row: 2; grid-column: 2; }
+  .v2 .v2-assets .tag { grid-row: 1; grid-column: 3; justify-self: end; }
+  .v2 .v2-assets .preview-btn { grid-row: 2; grid-column: 3; justify-self: end; }
+  .v2 .v2-assets .preview-inline { grid-row: 3; grid-column: 1 / -1; }
+}
+
+/* weeks */
+.v2 .v2-strip-months { margin-bottom: var(--s2); }
+.v2 .v2-strip-key { margin: var(--s3) 0 var(--s4); }
+.v2 .v2-week-detail { padding: var(--s4); margin-bottom: var(--s2); line-height: 1.45; }
+.v2 .v2-week-detail p { margin-top: var(--s2); }
+.v2 .v2-week-detail .wb-week-head { margin-top: 0; }
+
+/* 7. scorecard: each label belongs to the bar under it */
+.v2 .score { gap: var(--s5); }
+.v2 .score-row { gap: var(--s2) var(--s4); }
+@media (min-width: 561px) { .v2 .score { gap: var(--s4); } }
+
+/* 8. parked + footer: no dead space */
+.v2 .v2-parked { padding-top: var(--s5) !important; }
+.v2 footer { margin-top: var(--s6); padding: var(--s5) 0 var(--s6); line-height: 1.55; }
+.v2 .v2-tile-value.word { font-size: 22px; line-height: 1.25; }
+@media (max-width: 400px) { .v2 .v2-tile-value.word { font-size: 19px; } }
+.c-value, .c-today-label { paint-order: stroke; stroke: var(--sheet); stroke-width: 5px; stroke-linejoin: round; }
