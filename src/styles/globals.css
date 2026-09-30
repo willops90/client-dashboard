@@ -697,7 +697,12 @@ details.v2-more > .wb { margin-top: 12px; }
 .v2-glance-head h2 { margin: 0; font-size: 18px; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--s3); row-gap: 2px; }
 .v2-glance-head > .hint { white-space: nowrap; }
 .v2-glance-dates { font-size: 24px; font-weight: 700; color: var(--teal); white-space: nowrap; }
-.v2-daybar { position: relative; height: 6px; border-radius: 3px; background: var(--slate-soft); overflow: hidden; margin-bottom: var(--s3); }
+.v2-daybar { position: relative; height: 6px; border-radius: 3px; background: var(--slate-soft); overflow: hidden; margin-bottom: var(--s1); }
+.v2-dayscale { display: grid; margin-bottom: var(--s3); font-size: 12.5px; color: var(--muted); }
+.v2-dayscale span { min-width: 0; padding-top: 2px; }
+.v2-dayscale span + span { border-left: 2px solid var(--rule); padding-left: var(--s2); }
+.v2-dayscale b { font-weight: 700; margin-right: 2px; }
+.v2-dayscale .on { color: var(--teal); font-weight: 600; }
 .v2-daybar-a { position: absolute; inset: 0 auto 0 0; background: var(--teal-soft); }
 .v2-daybar-fill { position: absolute; inset: 0 auto 0 0; background: var(--teal); border-radius: 3px; }
 .v2-glance-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s2); }
@@ -711,6 +716,7 @@ details.v2-more > .wb { margin-top: 12px; }
 .v2-now { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .05em; }
 .v2-glance-line { font-size: 14.5px; font-weight: 600; line-height: 1.35; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); }
 .v2-glance-line .tag { font-size: 11.5px; padding: 1px 8px; }
+.v2-glance-sub { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); font-size: 12.5px; font-weight: 500; color: var(--muted); }
 .v2-next { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s2) var(--s4);
   margin-top: var(--s3); padding: var(--s3) var(--s4); border-radius: 10px; background: var(--slate-soft); font-size: 14.5px; }
 .v2-next .row-actions { align-items: start; }

@@ -2,6 +2,7 @@ import Markdown from "react-markdown";
 import { BUILD_PHASE_END_DAY, CYCLE_DAYS, formatDate, formatValue, kpiStatus, latestReading } from "@/lib/leap";
 import { formatMeetingTime, tzAbbrev } from "@/lib/format";
 import { MONTH_STATUS, type DashboardData } from "@/lib/types";
+import { calendarMonth } from "@/lib/plan-view";
 import { PILLARS, type PillarKey } from "./Pillar";
 
 export function currentPillar(day: number): PillarKey {
@@ -20,25 +21,46 @@ export function Glance({ data }: { data: DashboardData }) {
   const st = primary ? kpiStatus(primary, primary.readings) : null;
   const done = assets.filter((a) => a.status === "done").length;
 
+  const short = (d: string) => formatDate(d, { day: "numeric", month: "short" });
+  const reviewing = day > BUILD_PHASE_END_DAY;
+
+  // Each tile says what it shows, so the pillars don't read as one per month:
+  // L and E are set at the planning meeting, A runs to day 60, and the KPIs
+  // are checked at every meeting with the full review from day 60.
   const lines: Record<PillarKey, React.ReactNode> = {
     L: cycle.goal_short ?? cycle.goal_title,
-    E: monthNow ? (
+    E: (
       <>
-        Month {monthNow} of 3{month && <span className={`tag ${MONTH_STATUS[month.status].key}`}>{MONTH_STATUS[month.status].label}</span>}
+        Agreed {short(cycle.start_date)}
+        {month && (
+          <span className="v2-glance-sub">
+            {calendarMonth(cycle.start_date, cycle.end_date, month.number).label} highlights:{" "}
+            <span className={`tag ${MONTH_STATUS[month.status].key}`}>{MONTH_STATUS[month.status].label}</span>
+          </span>
+        )}
       </>
-    ) : (
-      "Agreed at the planning meeting"
     ),
-    A: `${done} of ${assets.length} assets done`,
-    P:
-      primary && last && st ? (
-        <>
-          {formatValue(last.value, primary.unit)} → {formatValue(primary.target_value, primary.unit)}
-          <span className={`tag ${st.key}`}>{st.label}</span>
-        </>
-      ) : (
-        "First numbers come with Friday's check-in"
-      ),
+    A: (
+      <>
+        {done} of {assets.length} assets done
+        <span className="v2-glance-sub">Built days 1–{BUILD_PHASE_END_DAY}</span>
+      </>
+    ),
+    P: (
+      <>
+        {primary && last && st ? (
+          <>
+            {formatValue(last.value, primary.unit)} → {formatValue(primary.target_value, primary.unit)}
+            <span className={`tag ${st.key}`}>{st.label}</span>
+          </>
+        ) : (
+          "First numbers come with Friday's check-in"
+        )}
+        <span className="v2-glance-sub">
+          {reviewing ? "Full review under way" : `Checked every meeting · full review from day ${BUILD_PHASE_END_DAY}`}
+        </span>
+      </>
+    ),
   };
 
   return (
@@ -60,6 +82,19 @@ export function Glance({ data }: { data: DashboardData }) {
         <div className="v2-daybar" aria-hidden="true">
           <span className="v2-daybar-a" style={{ width: `${(BUILD_PHASE_END_DAY / CYCLE_DAYS) * 100}%` }} />
           <span className="v2-daybar-fill" style={{ width: `${(day / CYCLE_DAYS) * 100}%` }} />
+        </div>
+      )}
+      {inCycle && (
+        <div
+          className="v2-dayscale"
+          style={{ gridTemplateColumns: `${BUILD_PHASE_END_DAY}fr ${CYCLE_DAYS - BUILD_PHASE_END_DAY}fr` }}
+        >
+          <span className={reviewing ? undefined : "on"}>
+            <b>A</b> Create assets · days 1–{BUILD_PHASE_END_DAY}
+          </span>
+          <span className={reviewing ? "on" : undefined}>
+            <b>P</b> Review · days {BUILD_PHASE_END_DAY + 1}–{CYCLE_DAYS}
+          </span>
         </div>
       )}
       <ul className="v2-glance-tiles">
