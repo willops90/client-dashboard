@@ -27,6 +27,8 @@ export type Cycle = {
   goal_note: string | null;
   goal_why: string | null;
   anchor_quote: string | null;
+  growth_opportunities: string[] | null;
+  strategic_initiatives: string[] | null;
   status: string;
 };
 

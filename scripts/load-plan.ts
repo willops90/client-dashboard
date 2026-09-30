@@ -163,6 +163,8 @@ async function loadCycle(db: Db, plan: Plan, clientId: string, log: string[]): P
           milestones: c.milestones ?? null,
           goal_why: c.goal_why ?? null,
           anchor_quote: c.anchor_quote ?? null,
+          growth_opportunities: plan.growth_opportunities ?? null,
+          strategic_initiatives: plan.strategic_initiatives ?? null,
           ...(c.status ? { status: c.status } : {}),
         },
         { onConflict: "client_id,number" },
@@ -217,10 +219,12 @@ async function loadKpis(db: Db, plan: Plan, cycleId: string, log: string[]) {
 
 async function loadPlanPairs(db: Db, plan: Plan, cycleId: string) {
   must(await db.from("plan_pairs").delete().eq("cycle_id", cycleId), "Clearing plan pairs");
-  must(
-    await db.from("plan_pairs").insert(plan.plan_pairs.map((p, i) => ({ cycle_id: cycleId, ...p, sort: i }))),
-    "Saving plan pairs",
-  );
+  if (plan.plan_pairs?.length) {
+    must(
+      await db.from("plan_pairs").insert(plan.plan_pairs.map((p, i) => ({ cycle_id: cycleId, ...p, sort: i }))),
+      "Saving plan pairs",
+    );
+  }
 }
 
 async function loadMonthsAndWeeks(db: Db, plan: Plan, cycleId: string, log: string[]) {

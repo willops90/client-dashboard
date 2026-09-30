@@ -164,7 +164,10 @@ export const planSchema = z
           initiative_short: z.string().optional(),
         }),
       )
-      .min(1),
+      .optional()
+      .describe("older format: problem and initiative in pairs. New plans use the two lists instead"),
+    growth_opportunities: z.array(text).min(1).max(6).optional().describe("the problems worth solving, as on the LEAP plan slide"),
+    strategic_initiatives: z.array(text).min(1).max(6).optional().describe("what we'll do about them, as on the LEAP plan slide"),
     months: z
       .array(
         z.object({
@@ -221,6 +224,10 @@ export const planSchema = z
       .optional(),
   })
   .superRefine((plan, ctx) => {
+    const hasLists = !!plan.growth_opportunities?.length && !!plan.strategic_initiatives?.length;
+    if (!hasLists && !plan.plan_pairs?.length) {
+      ctx.addIssue({ code: "custom", path: ["growth_opportunities"], message: "add growth_opportunities and strategic_initiatives" });
+    }
     const primaries = plan.kpis.filter((k) => k.primary).length;
     if (primaries !== 1) {
       ctx.addIssue({ code: "custom", path: ["kpis"], message: `exactly one KPI needs "primary": true (found ${primaries})` });

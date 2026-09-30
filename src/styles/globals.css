@@ -771,3 +771,67 @@ details.v2-more > .wb { margin-top: 12px; }
   .v2 .v2-since-line { font-size: 14.5px; }
   .v2 .v2-since .v2-more > summary { padding: var(--s1) 0 0; }
 }
+
+/* ============ E · Plan in the LEAP slide structure ============ */
+.v2-plan-link { margin: calc(-1 * var(--s1, 4px)) 0 var(--s4, 16px); font-size: 14.5px; }
+.v2-plan-link a { font-weight: 650; }
+.v2-lists { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3, 12px); margin-bottom: var(--s5, 24px); }
+.v2-lists > div { min-width: 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 12px; padding: var(--s4, 16px); }
+.v2-list-head { display: grid; gap: 2px; margin: 0 0 var(--s2, 8px); }
+.v2-list-head b { font-size: 15.5px; }
+.v2-list-head span { font-size: 13px; font-style: italic; color: var(--muted); }
+.v2-lists ol { margin: 0; padding-left: 20px; display: grid; gap: var(--s2, 8px); font-size: 15px; line-height: 1.45; }
+.v2-month-text { margin: 0 0 var(--s2, 8px); font-size: 14.5px; line-height: 1.45; }
+@media (max-width: 640px) { .v2-lists { grid-template-columns: 1fr; } }
+
+/* ============ LEAP plan page (the slide layout) ============ */
+.lp { max-width: 1180px; margin: 0 auto; padding: 0 20px 40px; }
+.lp-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 0; flex-wrap: wrap; }
+.lp-bar a { font-weight: 600; }
+.lp-slide { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 28px 32px 20px; margin-bottom: 28px;
+  display: grid; gap: 16px; align-content: start; }
+@media (min-width: 900px) { .lp-slide { aspect-ratio: 16 / 9; } }
+.lp-brand { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.lp-brand .oo-name { font-size: 18px; }
+.lp-client-logo { height: 32px; width: auto; }
+.lp-tag { margin: 0; font-size: 12.5px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.lp-title { margin: -8px 0 0; font-size: clamp(24px, 3vw, 34px); max-width: none; line-height: 1.1; }
+.lp-sub { margin: -8px 0 0; color: var(--muted); font-size: 14px; }
+.lp-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; min-width: 0; font-size: 14px; line-height: 1.45; }
+.lp-card p { margin: 0 0 6px; }
+.lp-card-head { font-size: 12.5px !important; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.lp-leap { font-weight: 500; font-style: italic; text-transform: none; letter-spacing: 0; color: var(--muted); }
+.lp-goal { margin-top: 8px !important; }
+.lp-months, .lp-weeks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.lp-kpis { background: var(--slate-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.lp-kpis p { margin: 0 0 4px; }
+.lp-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.lp-lists ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.lp-focus { color: var(--ink); }
+.lp-weeks ol { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.lp-weeks li { border-top: 1px solid var(--rule); padding-top: 6px; }
+.lp-weeks li p { margin: 0; font-size: 13px; }
+.lp-week { font-weight: 700; font-size: 12px !important; text-transform: uppercase; letter-spacing: .05em; }
+.lp-week span { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--muted); }
+.lp-foot { margin: auto 0 0; font-size: 12px; color: var(--muted); }
+@media (max-width: 760px) {
+  .lp-slide { padding: 20px 16px; }
+  .lp-months, .lp-weeks, .lp-lists { grid-template-columns: 1fr; }
+}
+
+/* Print: one landscape page per slide, light theme, no page chrome */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  :root { --paper: #FFFFFF; --sheet: #FFFFFF; --ink: #1B2831; --muted: #5A6870; --rule: #CFD8D8; --teal: #0E6B66; --slate-soft: #EEF1F3;
+    --brand-ink: #123027; --brand-accent: #4E7D66; --brand-ring-a: #BE8F42; --brand-ring-b: #6E9A84; }
+  body { background: #fff; }
+  .lp { max-width: none; padding: 0; }
+  .lp-bar { display: none; }
+  .lp-slide { border: 0; border-radius: 0; padding: 0; margin: 0; aspect-ratio: auto; break-after: page; gap: 10px; }
+  .lp-slide:last-child { break-after: auto; }
+  .lp-months, .lp-weeks { grid-template-columns: repeat(3, 1fr); }
+  .lp-lists { grid-template-columns: 1fr 1fr; }
+  .lp-card, .lp-kpis { break-inside: avoid; font-size: 11px; padding: 8px 10px; }
+  .lp-weeks li p { font-size: 10px; }
+  .lp-title { font-size: 22px; }
+}

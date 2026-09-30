@@ -89,6 +89,8 @@ export function buildDemoDashboard(now = new Date(), atDay?: number): DashboardD
     milestones: plan.cycle.milestones ?? null,
     goal_why: plan.cycle.goal_why ?? null,
     anchor_quote: plan.cycle.anchor_quote ?? null,
+    growth_opportunities: plan.growth_opportunities ?? null,
+    strategic_initiatives: plan.strategic_initiatives ?? null,
     status: "active",
   };
   const client = {
@@ -121,7 +123,7 @@ export function buildDemoDashboard(now = new Date(), atDay?: number): DashboardD
       goals: Object.entries(k.goals ?? {}).map(([day, value]) => ({ day: Number(day), value })),
       readings: (demoReadings[k.name] ?? []).map((value, w) => ({ week_number: w + 1, value, entered_by_advisor: false })),
     })),
-    planPairs: plan.plan_pairs.map((p, i) => ({
+    planPairs: (plan.plan_pairs ?? []).map((p, i) => ({
       id: `p${i}`,
       ...p,
       problem_short: p.problem_short ?? null,

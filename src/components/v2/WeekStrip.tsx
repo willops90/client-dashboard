@@ -8,7 +8,18 @@ import { WeeklyBreakdown, type BreakdownMonth } from "@/components/dashboard/Wee
  * Thirteen weeks at a glance. Tap a week to see its meeting and asset; the
  * full month-by-month breakdown sits behind "See all weeks".
  */
-export function WeekStrip({ months, slug, advisor }: { months: BreakdownMonth[]; slug: string; advisor: boolean }) {
+export function WeekStrip({
+  months,
+  slug,
+  advisor,
+  labels,
+}: {
+  months: BreakdownMonth[];
+  slug: string;
+  advisor: boolean;
+  /** Month labels, e.g. calendar months ("Aug/Sept"); defaults to "Month 1". */
+  labels?: Record<number, string>;
+}) {
   const weeks = months.flatMap((m) => m.weeks.map((w) => ({ ...w, month: m.number })));
   const current = weeks.find((w) => w.current) ?? weeks[0];
   const [selected, setSelected] = useState(current?.number);
@@ -21,7 +32,7 @@ export function WeekStrip({ months, slug, advisor }: { months: BreakdownMonth[];
       <div className="v2-strip-months" aria-hidden="true">
         {months.map((m) => (
           <span key={m.number} style={{ flexGrow: m.weeks.length }}>
-            Month {m.number}
+            {labels?.[m.number] ?? `Month ${m.number}`}
           </span>
         ))}
       </div>

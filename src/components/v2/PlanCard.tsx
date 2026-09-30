@@ -1,46 +1,56 @@
-import { formatDate, monthRange } from "@/lib/leap";
+import Link from "next/link";
 import { MONTH_STATUS, type DashboardData } from "@/lib/types";
+import { calendarMonth, planLists } from "@/lib/plan-view";
 import { buildBreakdown } from "@/components/dashboard/PlanSections";
 import { PillarHead } from "./Pillar";
 import { WeekStrip } from "./WeekStrip";
 
-/** How the goal gets met: one-line opportunity → initiative pairs that expand, and a three-month strip. The goal itself is at the top of the page. */
+export function planPageHref(data: DashboardData): string {
+  return data.viewer.kind === "demo" ? "/demo-v2/plan" : `/c/${data.client.slug}/plan`;
+}
+
+/**
+ * E · Plan, in the structure of the LEAP plan slide: growth opportunities and
+ * strategic initiatives as two lists, month highlights named by the calendar
+ * with a goal each, and the weekly timeline.
+ */
 export function PlanCard({ data }: { data: DashboardData }) {
-  const { cycle, planPairs, months, day } = data;
+  const { cycle, months, day } = data;
+  const { opportunities, initiatives } = planLists(data);
   const currentMonth = day >= 1 && day <= 90 ? Math.min(3, Math.floor((day - 1) / 30) + 1) : 0;
+
   return (
     <section className="block" aria-labelledby="h-plan">
       <PillarHead k="E" />
+      <p className="v2-plan-link">
+        <Link href={planPageHref(data)}>View the full LEAP plan</Link>
+        <span className="hint"> · to present or save as PDF</span>
+      </p>
 
-      {planPairs.length > 0 && (
-        <div className="v2-pairs">
-          <p className="v2-pairs-head" aria-hidden="true">
-            <span>Growth opportunity</span>
-            <span>Strategic initiative</span>
-          </p>
-          {planPairs.map((p) => (
-            <details key={p.id} className="v2-pair">
-              <summary>
-                <span className="v2-pair-p">{p.problem_short ?? p.problem}</span>
-                <span className="v2-pair-i">
-                  <span className="v2-arrow" aria-label="solved by">
-                    →
-                  </span>
-                  {p.initiative_short ?? p.initiative}
-                </span>
-              </summary>
-              <div className="v2-pair-body">
-                <p>
-                  <span className="hint">The problem</span>
-                  {p.problem}
-                </p>
-                <p>
-                  <span className="hint">What we're doing</span>
-                  {p.initiative}
-                </p>
-              </div>
-            </details>
-          ))}
+      {(opportunities.length > 0 || initiatives.length > 0) && (
+        <div className="v2-lists">
+          <div>
+            <p className="v2-list-head">
+              <b>Growth opportunities</b>
+              <span>The problems worth solving</span>
+            </p>
+            <ol>
+              {opportunities.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <p className="v2-list-head">
+              <b>Strategic initiatives</b>
+              <span>What we&apos;re doing about them</span>
+            </p>
+            <ol>
+              {initiatives.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ol>
+          </div>
         </div>
       )}
 
@@ -48,26 +58,21 @@ export function PlanCard({ data }: { data: DashboardData }) {
         <ol className="v2-months">
           {months.map((m) => {
             const st = MONTH_STATUS[m.status];
-            const r = monthRange(cycle.start_date, m.number);
+            const cal = calendarMonth(cycle.start_date, cycle.end_date, m.number);
             return (
               <li key={m.id} className={`v2-month ${st.key}${m.number === currentMonth ? " now" : ""}`}>
                 <p className="v2-month-head">
-                  <b>Month {m.number}</b>
+                  <b>{cal.label} highlights</b>
                   <span className={`tag ${st.key}`}>{m.number === currentMonth && m.status === "upcoming" ? "Now" : st.label}</span>
+                </p>
+                <p className="v2-month-text">
+                  <span className="hint">{cal.dates}:</span> {m.summary}
                 </p>
                 {m.goal_text && (
                   <p className="v2-month-goal">
                     <b>Goal:</b> {m.goal_text}
                   </p>
                 )}
-                <details className="v2-more">
-                  <summary>Highlights</summary>
-                  <p className="hint">
-                    {formatDate(r.from, { day: "numeric", month: "short" })} to{" "}
-                    {formatDate(m.number === 3 ? cycle.end_date : r.to, { day: "numeric", month: "short" })}
-                  </p>
-                  <p>{m.summary}</p>
-                </details>
               </li>
             );
           })}
@@ -75,8 +80,13 @@ export function PlanCard({ data }: { data: DashboardData }) {
       )}
 
       <div className="v2-timeline">
-        <p className="v2-kicker">Timeline: 13 weeks</p>
-        <WeekStrip months={buildBreakdown(data)} slug={data.client.slug} advisor={data.viewer.kind === "advisor"} />
+        <p className="v2-kicker">Weekly plan breakdown</p>
+        <WeekStrip
+          months={buildBreakdown(data)}
+          slug={data.client.slug}
+          advisor={data.viewer.kind === "advisor"}
+          labels={Object.fromEntries([1, 2, 3].map((n) => [n, calendarMonth(cycle.start_date, cycle.end_date, n).label]))}
+        />
       </div>
     </section>
   );

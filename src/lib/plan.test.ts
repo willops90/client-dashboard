@@ -160,3 +160,25 @@ describe("demo LEAP structure data", () => {
     expect(buildDemoDashboard(new Date(Date.UTC(2026, 8, 30, 2)), 65).day).toBe(65);
   });
 });
+
+describe("LEAP plan slide structure", () => {
+  const plan = (parsePlan(northside) as { plan: Plan }).plan;
+  it("keeps growth opportunities and strategic initiatives as two separate lists", () => {
+    expect(plan.growth_opportunities?.length).toBeGreaterThan(0);
+    expect(plan.strategic_initiatives?.length).toBeGreaterThan(0);
+    expect(plan.plan_pairs).toBeUndefined();
+  });
+  it("still accepts older plans written as pairs", () => {
+    const p = clone();
+    delete p.growth_opportunities;
+    delete p.strategic_initiatives;
+    p.plan_pairs = [{ problem: "a", initiative: "b" }];
+    expect(parsePlan(p).ok).toBe(true);
+  });
+  it("needs one format or the other", () => {
+    const p = clone();
+    delete p.growth_opportunities;
+    delete p.strategic_initiatives;
+    expect(parsePlan(p).ok).toBe(false);
+  });
+});

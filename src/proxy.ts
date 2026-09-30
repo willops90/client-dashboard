@@ -9,7 +9,8 @@ const PUBLIC_PATHS = ["/login", "/auth", "/demo", "/demo-v2"];
 export async function proxy(request: NextRequest) {
   // The demo uses only made-up data built into the code, so it skips the
   // login check and works even before Supabase is configured.
-  if (request.nextUrl.pathname === "/demo" || request.nextUrl.pathname === "/demo-v2") return NextResponse.next();
+  const path0 = request.nextUrl.pathname;
+  if (path0 === "/demo" || path0 === "/demo-v2" || path0.startsWith("/demo-v2/")) return NextResponse.next();
 
   let response = NextResponse.next({ request });
 

@@ -203,3 +203,24 @@ describe("exit roadmap", () => {
     expect([1, 2, 3, 4].map((c) => roadmapStatus(c, 2))).toEqual(["done", "now", "next", "planned"]);
   });
 });
+
+import { calendarMonth, planLists, planPairsOrLists } from "./plan-view";
+
+describe("LEAP plan view helpers", () => {
+  it("names cycle months by the calendar", () => {
+    expect(calendarMonth("2026-08-17", "2026-11-14", 1)).toMatchObject({ label: "Aug/Sept", dates: "17 Aug – 15 Sept" });
+    expect(calendarMonth("2026-08-17", "2026-11-14", 3)).toMatchObject({ label: "Oct/Nov", dates: "16 Oct – 14 Nov" });
+    expect(calendarMonth("2026-09-01", "2026-11-29", 1).label).toBe("Sept");
+  });
+
+  it("reads the two lists from either plan format", () => {
+    const cycle = { growth_opportunities: ["a", "b"], strategic_initiatives: ["x", "y", "z"] } as never;
+    expect(planLists({ cycle, planPairs: [] })).toEqual({ opportunities: ["a", "b"], initiatives: ["x", "y", "z"] });
+    const pairs = [{ id: "1", problem: "p", initiative: "i", problem_short: null, initiative_short: null }];
+    expect(planLists({ cycle: { growth_opportunities: null, strategic_initiatives: null } as never, planPairs: pairs })).toEqual({
+      opportunities: ["p"],
+      initiatives: ["i"],
+    });
+    expect(planPairsOrLists({ cycle, planPairs: [] })).toHaveLength(3);
+  });
+});

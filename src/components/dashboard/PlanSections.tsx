@@ -1,12 +1,14 @@
 import { BUILD_PHASE_END_DAY, addDays, formatDate, formatValue, kpiStatus, latestReading, monthRange, weekStart } from "@/lib/leap";
 import { ASSET_STATUS, DRAG_LABELS, MILESTONE_STATUS, MONTH_STATUS, type DashboardData } from "@/lib/types";
 import { LeapTag } from "./LeapTag";
+import { planPairsOrLists } from "@/lib/plan-view";
 import { WeeklyBreakdown, type BreakdownMonth } from "./WeeklyBreakdown";
 import { StatusSelect } from "@/components/advisor/StatusSelect";
 import { AssetPreviewControl } from "./AssetCard";
 
 export function PlanSection({ data }: { data: DashboardData }) {
-  const { cycle, months, planPairs, day, viewer, client } = data;
+  const { cycle, months, day, viewer, client } = data;
+  const planPairs = planPairsOrLists(data);
   const currentMonth = day >= 1 && day <= 90 ? Math.min(3, Math.floor((day - 1) / 30) + 1) : 0;
   return (
     <section className="block" aria-labelledby="h-plan">
