@@ -780,9 +780,17 @@ details.v2-more > .wb { margin-top: 12px; }
 .v2-list-head { display: grid; gap: 2px; margin: 0 0 var(--s2, 8px); }
 .v2-list-head b { font-size: 15.5px; }
 .v2-list-head span { font-size: 13px; font-style: italic; color: var(--muted); }
-.v2-lists ol { margin: 0; padding-left: 20px; display: grid; gap: var(--s2, 8px); font-size: 15px; line-height: 1.45; }
+.v2-lists ul { margin: 0; padding-left: 20px; display: grid; gap: var(--s2, 8px); font-size: 15px; line-height: 1.45; }
 .v2-month-text { margin: 0 0 var(--s2, 8px); font-size: 14.5px; line-height: 1.45; }
 @media (max-width: 640px) { .v2-lists { grid-template-columns: 1fr; } }
+/* Plan section laid out like the LEAP plan slide: month cards, KPI band, lists. */
+.v2 .v2-months { gap: var(--s3); margin-bottom: var(--s3); }
+.v2 .v2-month { background: var(--sheet); border: 1px solid var(--rule); border-top-width: 4px; border-radius: 12px; padding: var(--s4); }
+.v2 .v2-month.good { border-top-color: var(--good); }
+.v2 .v2-month.now { border-top-color: var(--teal); }
+.v2-kpi-line { background: color-mix(in srgb, var(--rule) 40%, var(--sheet)); border-radius: 12px; padding: var(--s4, 16px); margin-bottom: var(--s3, 12px); }
+.v2-kpi-line > p:last-child { margin: 0; font-size: 15px; line-height: 1.5; }
+@media (max-width: 640px) { .v2 .v2-months { gap: var(--s3); } }
 
 /* ============ LEAP plan page (the slide layout) ============ */
 .lp { max-width: 1180px; margin: 0 auto; padding: 0 20px 40px; }

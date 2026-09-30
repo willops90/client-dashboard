@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { MONTH_STATUS, type DashboardData } from "@/lib/types";
+import { formatDate, formatValue } from "@/lib/leap";
+import { MILESTONE_STATUS, MONTH_STATUS, type DashboardData } from "@/lib/types";
 import { calendarMonth, planLists } from "@/lib/plan-view";
 import { buildBreakdown } from "@/components/dashboard/PlanSections";
 import { PillarHead } from "./Pillar";
@@ -10,14 +11,19 @@ export function planPageHref(data: DashboardData): string {
 }
 
 /**
- * E · Plan, in the structure of the LEAP plan slide: growth opportunities and
- * strategic initiatives as two lists, month highlights named by the calendar
- * with a goal each, and the weekly timeline.
+ * E · Plan, in the order of the LEAP plan slide (and the printable plan page):
+ * month highlights named by the calendar with a goal each, the KPI targets,
+ * strategic initiatives beside growth opportunities, then the weekly timeline.
  */
 export function PlanCard({ data }: { data: DashboardData }) {
   const { cycle, months, day } = data;
   const { opportunities, initiatives } = planLists(data);
   const currentMonth = day >= 1 && day <= 90 ? Math.min(3, Math.floor((day - 1) / 30) + 1) : 0;
+  const by = formatDate(cycle.end_date, { day: "numeric", month: "short" });
+  const kpiLine = [
+    ...data.kpis.map((k) => `${k.name}: ${formatValue(k.target_value, k.unit)}`),
+    ...(cycle.milestones ?? []).map((m) => `${m.name}: ${(m.target ?? MILESTONE_STATUS.passed.label).toLowerCase()}`),
+  ];
 
   return (
     <section className="block" aria-labelledby="h-plan">
@@ -26,33 +32,6 @@ export function PlanCard({ data }: { data: DashboardData }) {
         <Link href={planPageHref(data)}>View the full LEAP plan</Link>
         <span className="hint"> · to present or save as PDF</span>
       </p>
-
-      {(opportunities.length > 0 || initiatives.length > 0) && (
-        <div className="v2-lists">
-          <div>
-            <p className="v2-list-head">
-              <b>Growth opportunities</b>
-              <span>The problems worth solving</span>
-            </p>
-            <ol>
-              {opportunities.map((o) => (
-                <li key={o}>{o}</li>
-              ))}
-            </ol>
-          </div>
-          <div>
-            <p className="v2-list-head">
-              <b>Strategic initiatives</b>
-              <span>What we&apos;re doing about them</span>
-            </p>
-            <ol>
-              {initiatives.map((o) => (
-                <li key={o}>{o}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      )}
 
       {months.length > 0 && (
         <ol className="v2-months">
@@ -66,7 +45,7 @@ export function PlanCard({ data }: { data: DashboardData }) {
                   <span className={`tag ${st.key}`}>{m.number === currentMonth && m.status === "upcoming" ? "Now" : st.label}</span>
                 </p>
                 <p className="v2-month-text">
-                  <span className="hint">{cal.dates}:</span> {m.summary}
+                  <b>{cal.dates}:</b> {m.summary}
                 </p>
                 {m.goal_text && (
                   <p className="v2-month-goal">
@@ -77,6 +56,47 @@ export function PlanCard({ data }: { data: DashboardData }) {
             );
           })}
         </ol>
+      )}
+
+      {kpiLine.length > 0 && (
+        <div className="v2-kpi-line">
+          <p className="v2-list-head">
+            <b>KPIs</b>
+            <span>
+              LEAP: Review progress · <a href="#h-progress">see where they stand</a>
+            </span>
+          </p>
+          <p>
+            <b>By {by}:</b> {kpiLine.join(" · ")}
+          </p>
+        </div>
+      )}
+
+      {(opportunities.length > 0 || initiatives.length > 0) && (
+        <div className="v2-lists">
+          <div>
+            <p className="v2-list-head">
+              <b>Strategic initiatives</b>
+              <span>LEAP: Limit focus · what we&apos;re doing</span>
+            </p>
+            <ul>
+              {initiatives.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="v2-list-head">
+              <b>Growth opportunities</b>
+              <span>LEAP: Limit focus · the problems worth solving</span>
+            </p>
+            <ul>
+              {opportunities.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
 
       <div className="v2-timeline">
