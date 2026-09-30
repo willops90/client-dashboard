@@ -44,7 +44,7 @@ export function Glance({ data }: { data: DashboardData }) {
   return (
     <section className="v2-glance" aria-labelledby="h-glance">
       <div className="v2-glance-head">
-        <h2 id="h-glance">LEAP at a glance</h2>
+        <h2 id="h-glance">This LEAP cycle at a glance</h2>
         {inCycle && (
           <span className="hint">
             Day {day} of {CYCLE_DAYS}
